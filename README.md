@@ -13,9 +13,9 @@ Install on your machine
 
 3. Follow displayed instructions to log in to your brand new OpenShift Container Platform!
 
-  - Admin User | Password: admin | admin
+  - Admin user and password: admin | admin
 
-  - Developer User | Passord: openshift-dev | devel
+  - Developer user and passord: openshift-dev | devel
 
 
 Supporting Articles
