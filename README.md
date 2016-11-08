@@ -1,5 +1,3 @@
-![LOGO](https://github.com/redhatdemocentral/ocp-install-demo/blob/master/docs/demo-images/ocp.png?raw=true)
-
 OpenShift Container Platform Install Demo
 =========================================
 If you are looking to develop containerized applications, the OpenShift Container Plaform can help you by providing 
