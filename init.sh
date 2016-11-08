@@ -40,12 +40,18 @@ if [[ `uname` == 'Darwin' ]]; then
 fi
 
 if [[ `uname` == 'Darwin' ]]; then
-	command -v oc help >/dev/null 2>&1 || { echo >&2 "OpenShift CLI tooling is required but not installed yet... downlaod here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.3/oc-3.3.1.3-1-macosx.tar.gz"; exit1; }
+	command -v oc help >/dev/null 2>&1 || { echo >&2 "OpenShift CLI tooling is required but not installed yet... downlaod here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.3/oc-3.3.1.3-1-macosx.tar.gz"; exit 1; }
 	echo "OpenShift command line tools installed..."
 	echo
+else
+		# Linux machine.
+		#
+		command -v oc help >/dev/null 2>&1 || { echo >&2 "OpenShift CLI tooling is required but not installed yet... downlaod here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.3/oc-3.3.1.3-1-linux.tar.gz"; exit 1; } 
+		echo "OpenShift command line tools installed..."
+		echo
 fi
 
-echo
+
 echo "Installing OSE with cluster up..."
 echo
 oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=v3.3.1.3 --create-machine
