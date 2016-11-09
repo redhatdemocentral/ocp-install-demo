@@ -31,5 +31,3 @@ See the tagged releases for the following versions of the product:
 
 ![OCP Login](https://github.com/redhatdemocentral/ocp-install-demo/blob/master/docs/demo-images/ocp-login.png?raw=true)
 
-![VirtualBox](https://github.com/redhatdemocentral/ocp-install-demo/blob/master/docs/demo-images/ocp-virtualbox.png?raw=true)
-

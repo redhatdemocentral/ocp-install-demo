@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/sh 
 
 # wipe screen.
 clear 
