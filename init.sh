@@ -63,7 +63,7 @@ if [ $? -ne 0 ]; then
 		echo
 		echo Cleaning out existing 'openshift' docker machine.
 		echo
-		rm -r ~/.docker/machine/machines/openshift
+		docker-machine rm -f openshift
 
 		echo
 		echo "Trying again to install OSE with cluster up..."
