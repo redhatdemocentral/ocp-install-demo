@@ -16,13 +16,18 @@ Install on your machine
 
 3. Follow displayed instructions to log in to your brand new OpenShift Container Platform!
 
-  - Admin user and password: admin | admin
-
-  - Developer user and passord: openshift-dev | devel
-
 
 Notes
 -----
+Log in to the OCP console with:
+```
+   Developer user:  openshift-dev
+   Developer pass:  devel
+
+   Admin user: admin
+   Admin pass: admin
+```
+
 This project has an install script that is setup to allow you to re-run it without worrying about previous
 installations. If you re-run it, it removes old 'openshift' machines and reinstalls for you. If you want
 to save your installation of OCP, then use the following to stop and start instead of re-running the install
