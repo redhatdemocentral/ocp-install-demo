@@ -142,6 +142,9 @@ echo
 echo "Set OCP IP to $OCP_IP..."
 echo
 
+# set console environment to openshift container.
+eval "$(docker-machine env openshift)"
+
 echo "Updating JBoss image streams..."
 echo
 oc delete -n openshift -f 'https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json'
@@ -161,13 +164,13 @@ echo "= Look for information at end of OSE install.      ="
 echo "=                                                  ="
 echo "=  The server is accessible via web console at:    ="
 echo "=                                                  ="
-echo "=	    $OCP_IP             ="
+echo "=	  $OCP_IP              ="
 echo "=                                                  ="
-echo "=	 Log in as user: openshift-dev             ="
-echo "=    password: devel                               ="
+echo "=  Log in as user: openshift-dev                   ="
+echo "=        password: devel                           ="
 echo "=                                                  ="
 echo "=  Admin log in as: admin                          ="
-echo "=     password: admin                              ="
+echo "=         password: admin                          ="
 echo "=                                                  ="
 echo "=  Now get your Red Hat Demo Central example       ="
 echo "=  projects here:                                  ="
