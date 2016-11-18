@@ -147,7 +147,6 @@ eval "$(docker-machine env openshift)"
 
 echo "Updating JBoss image streams..."
 echo
-oc delete -n openshift -f 'https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json'
 oc create -n openshift -f 'https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json'
 
 echo
