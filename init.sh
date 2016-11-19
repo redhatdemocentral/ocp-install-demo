@@ -46,8 +46,8 @@ echo "Docker is installed... checking for valid version..."
 echo
 		
 # Check docker enging version.
-dockerverone=$(docker version | awk '/Version:/{print $2}' | awk -F[=.] '{print $1}')
-dockervertwo=$(docker version | awk '/Version:/{print $2}' | awk -F[=.] '{print $2}')
+dockerverone=$(docker version -f='{{ .Server.Version }}' | awk -F[=.] '{print $1}')
+dockervertwo=$(docker version -f='{{ .Server.Version }}' | awk -F[=.] '{print $2}')
 if [[ $dockerverone -eq 1 ]] && [[ $dockervertwo -ge 10 ]]; then
 	echo
 	echo "Valid version of docker engine found..."
@@ -65,8 +65,10 @@ echo "OpenShift command line tools installed... checking for valid version..."
 echo
 
 # Check oc version.
-verone=$(oc version | awk '/oc/{print $2}' | awk -F[=.] '{print $1}')
-vertwo=$(oc version | awk '/oc/{print $2}' | awk -F[=.] '{print $2}')
+verfull=$(oc version | awk '/oc/{print $2}')
+verone=$(echo $verfull | awk -F[=.] '{print $1}')
+vertwo=$(echo $verfull | awk -F[=.] '{print $2}')
+
 if [[ $verone == 'v3' ]] && [[ $vertwo -eq 3 ]]; then
 	echo "Version of installed OpenShift command line tools correct..."
 	echo
@@ -83,7 +85,7 @@ fi
 
 echo "Installing OSE with cluster up..."
 echo
-oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=v3.3.1.3 --create-machine
+oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$verfull --create-machine
 
 if [ $? -ne 0 ]; then
 		echo
@@ -96,7 +98,7 @@ if [ $? -ne 0 ]; then
 		echo
 		echo "Trying again to install OSE with cluster up..."
 		echo
-		oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=v3.3.1.3 --create-machine
+		oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$verfull --create-machine
 
 		if [ $? -ne 0 ]; then
 			echo
