@@ -1,5 +1,10 @@
 #!/bin/sh 
 
+DOCKER_MAJOR_VER=1
+DOCKER_MINOR_VER=10
+OC_MAJOR_VER="v3"
+OC_MINOR_VER=3
+
 # wipe screen.
 clear 
 
@@ -46,9 +51,9 @@ echo "Docker is installed... checking for valid version..."
 echo
 		
 # Check docker enging version.
-dockerverone=$(docker version -f='{{ .Server.Version }}' | awk -F[=.] '{print $1}')
-dockervertwo=$(docker version -f='{{ .Server.Version }}' | awk -F[=.] '{print $2}')
-if [[ $dockerverone -eq 1 ]] && [[ $dockervertwo -ge 10 ]]; then
+dockerverone=$(docker version | awk '/Version:/{print $2}' | awk -F[=.] '{print $1}')
+dockervertwo=$(docker version | awk '/Version:/{print $2}' | awk -F[=.] '{print $2}')
+if [[ $dockerverone -eq $DOCKER_MAJOR_VER ]] && [[ $dockervertwo -ge $DOCKER_MINOR_VER ]]; then
 	echo
 	echo "Valid version of docker engine found..."
 	echo
@@ -69,7 +74,7 @@ verfull=$(oc version | awk '/oc/{print $2}')
 verone=$(echo $verfull | awk -F[=.] '{print $1}')
 vertwo=$(echo $verfull | awk -F[=.] '{print $2}')
 
-if [[ $verone == 'v3' ]] && [[ $vertwo -eq 3 ]]; then
+if [[ $verone == $OC_MAJOR_VER ]] && [[ $vertwo -eq $OC_MINOR_VER ]]; then
 	echo "Version of installed OpenShift command line tools correct..."
 	echo
 else
