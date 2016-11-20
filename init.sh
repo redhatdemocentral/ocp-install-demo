@@ -51,8 +51,8 @@ echo "Docker is installed... checking for valid version..."
 echo
 		
 # Check docker enging version.
-dockerverone=$(docker version | awk '/Version:/{print $2}' | awk -F[=.] '{print $1}')
-dockervertwo=$(docker version | awk '/Version:/{print $2}' | awk -F[=.] '{print $2}')
+dockerverone=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $1}')
+dockervertwo=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $2}')
 if [[ $dockerverone -eq $DOCKER_MAJOR_VER ]] && [[ $dockervertwo -ge $DOCKER_MINOR_VER ]]; then
 	echo
 	echo "Valid version of docker engine found..."
