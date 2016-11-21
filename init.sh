@@ -38,7 +38,7 @@ echo
 
 # Ensure VirtualBox available.
 #
-if [[ `uname` == 'Darwin' ]]; then
+if [ `uname` == 'Darwin' ]; then
 		command -v VirtualBox -h >/dev/null 2>&1 || { echo >&2 "VirtualBox is required but not installed yet... downlaod here: https://www.virtualbox.org/wiki/Downloads"; exit 1; }
 		echo "VirtualBox is installed..."
 		echo
@@ -53,7 +53,7 @@ echo
 # Check docker enging version.
 dockerverone=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $1}')
 dockervertwo=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $2}')
-if [[ $dockerverone -eq $DOCKER_MAJOR_VER ]] && [[ $dockervertwo -ge $DOCKER_MINOR_VER ]]; then
+if [ $dockerverone -eq $DOCKER_MAJOR_VER ] && [ $dockervertwo -ge $DOCKER_MINOR_VER ]; then
 	echo
 	echo "Valid version of docker engine found..."
 	echo
@@ -74,7 +74,7 @@ verfull=$(oc version | awk '/oc/{print $2}')
 verone=$(echo $verfull | awk -F[=.] '{print $1}')
 vertwo=$(echo $verfull | awk -F[=.] '{print $2}')
 
-if [[ $verone == $OC_MAJOR_VER ]] && [[ $vertwo -eq $OC_MINOR_VER ]]; then
+if [ $verone == $OC_MAJOR_VER ] && [ $vertwo -eq $OC_MINOR_VER ]; then
 	echo "Version of installed OpenShift command line tools correct..."
 	echo
 else

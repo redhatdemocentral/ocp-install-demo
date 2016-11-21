@@ -41,7 +41,7 @@ script provided:
 
 Supporting Articles
 -------------------
-- [TODO: How to install OpenShift Container Platform in minutes]
+- [3 Steps to Cloud Happiness with OpenShift Container Platform](http://www.schabell.org/2016/11/3-steps-to-cloud-happiness-with-ocp.html)
 
 
 Released versions
