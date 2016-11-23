@@ -54,7 +54,6 @@ echo
 dockerverone=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $1}')
 dockervertwo=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $2}')
 if [ $dockerverone -eq $DOCKER_MAJOR_VER ] && [ $dockervertwo -ge $DOCKER_MINOR_VER ]; then
-	echo
 	echo "Valid version of docker engine found..."
 	echo
 else
@@ -83,7 +82,6 @@ else
 	echo "Download for Linux here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.3/oc-3.3.0.35-1-linux.tar.gz"
 	echo "Download for Mac here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.3/oc-3.3.1.3-1-macosx.tar.gz"
 	echo
-	echo
 	exit
 fi
 
@@ -106,33 +104,12 @@ if [ $? -ne 0 ]; then
 		oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$verfull --create-machine
 
 		if [ $? -ne 0 ]; then
-			echo
-			echo "Ensuring any previous OCP has been taken down..."
-			echo
-			oc cluster down --docker-machine=openshift
-			VBoxManage controlvm openshift poweroff
-			VBoxManage unregistervm openshift --delete
-			
-			if [ $? -ne 0 ]; then
 				echo
-				echo "Problems removing openshift VirtualBox entires, please clean out using the GUI if you can?"
+				echo "Problem with installation that I can't resolve, please raise an issue and add error output:"
 				echo
-				VBoxManage list vms
+				echo "   https://github.com/redhatdemocentral/ocp-install-demo/issues/new"
+				echo
 				exit
-			fi
-
-			echo
-			echo "Trying again to install OSE with cluster up..."
-			echo
-			oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=v3.3.1.3 --create-machine
-
-		  if [ $? -ne 0 ]; then
-				echo
-				echo "Problems with cleaning out VirtualBox entires, check the GUI?"
-				echo
-				VBoxManage list vms
-				exit
-			fi
 		fi
 fi
 
