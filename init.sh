@@ -39,14 +39,14 @@ echo
 # Ensure VirtualBox available.
 #
 if [ `uname` == 'Darwin' ]; then
-		command -v VirtualBox -h >/dev/null 2>&1 || { echo >&2 "VirtualBox is required but not installed yet... downlaod here: https://www.virtualbox.org/wiki/Downloads"; exit 1; }
+		command -v VirtualBox -h >/dev/null 2>&1 || { echo >&2 "VirtualBox is required but not installed yet... download here: https://www.virtualbox.org/wiki/Downloads"; exit 1; }
 		echo "VirtualBox is installed..."
 		echo
 fi
 
 # Ensure docker engine available.
 #
-command -v docker -h >/dev/null 2>&1 || { echo >&2 "Docker is required but not installed yet... downlaod here: https://www.docker.com/products/docker"; exit 1; }
+command -v docker -h >/dev/null 2>&1 || { echo >&2 "Docker is required but not installed yet... download here: https://www.docker.com/products/docker"; exit 1; }
 echo "Docker is installed... checking for valid version..."
 echo
 		
@@ -65,7 +65,7 @@ fi
 
 # Ensure OpenShift command line tools available.
 #
-command -v oc help >/dev/null 2>&1 || { echo >&2 "OpenShift CLI tooling is required but not installed yet... downlaod here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.3/oc-3.3.1.3-1-macosx.tar.gz"; exit 1; }
+command -v oc help >/dev/null 2>&1 || { echo >&2 "OpenShift CLI tooling is required but not installed yet... download here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.3/oc-3.3.1.3-1-macosx.tar.gz"; exit 1; }
 echo "OpenShift command line tools installed... checking for valid version..."
 echo
 
@@ -80,8 +80,8 @@ if [ $verone == $OC_MAJOR_VER ] && [ $vertwo -eq $OC_MINOR_VER ]; then
 else
 	echo "Version of installed OpenShift command line tools is $verone.$vertwo, must be v3.3 or higher..."
 	echo
-	echo "Downlaod for Linux here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.3/oc-3.3.0.35-1-linux.tar.gz"
-	echo "Downlaod for Mac here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.3/oc-3.3.1.3-1-macosx.tar.gz"
+	echo "Download for Linux here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.3/oc-3.3.0.35-1-linux.tar.gz"
+	echo "Download for Mac here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.3/oc-3.3.1.3-1-macosx.tar.gz"
 	echo
 	echo
 	exit
