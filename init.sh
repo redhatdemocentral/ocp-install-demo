@@ -86,9 +86,17 @@ else
 fi
 
 
-echo "Installing OSE with cluster up..."
+
+echo "Installing OCP with cluster up..."
 echo
-oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$verfull --create-machine
+if [ `uname` == 'Darwin' ]; then
+	# osx uses --create-machine.
+	oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$verfull --create-machine
+else
+	# linux versions don't need --create-machine.
+	oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$verfull
+fi
+
 
 if [ $? -ne 0 ]; then
 		echo
