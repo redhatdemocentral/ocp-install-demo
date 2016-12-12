@@ -31,7 +31,7 @@ echo "##      ####  #     #####   #   ####  #   # ##### # # #     ##"
 echo "##      #     #     #   #   #   #     #   # #  #  #   #     ##"   
 echo "##      #     ##### #   #   #   #      ###  #   # #   #     ##"   
 echo "##                                                          ##"   
-echo "##  Brought to you by Eric D. Schabell                      ##"
+echo "##  https://github.com/redhatdemocentral/ocp-install-demo   ##"
 echo "##                                                          ##"   
 echo "##############################################################"
 echo
@@ -54,7 +54,7 @@ echo
 dockerverone=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $1}')
 dockervertwo=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $2}')
 if [ $dockerverone -eq $DOCKER_MAJOR_VER ] && [ $dockervertwo -ge $DOCKER_MINOR_VER ]; then
-	echo "Valid version of docker engine found..."
+	echo "Valid version of docker engine found... $dockerverone.$dockervertwo"
 	echo
 else
 	echo "Docker engine version $dockerverone.$dockervertwo found... need 1.10+, please update: https://www.docker.com/products/docker"
@@ -74,7 +74,7 @@ verone=$(echo $verfull | awk -F[=.] '{print $1}')
 vertwo=$(echo $verfull | awk -F[=.] '{print $2}')
 
 if [ $verone == $OC_MAJOR_VER ] && [ $vertwo -eq $OC_MINOR_VER ]; then
-	echo "Version of installed OpenShift command line tools correct..."
+	echo "Version of installed OpenShift command line tools correct... $verfull"
 	echo
 else
 	echo "Version of installed OpenShift command line tools is $verone.$vertwo, must be v3.3 or higher..."
@@ -91,9 +91,13 @@ echo "Installing OCP with cluster up..."
 echo
 if [ `uname` == 'Darwin' ]; then
 	# osx uses --create-machine.
+	echo "Using osX version of cluster up... oc version: $verfull"
+	echo
 	oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$verfull --create-machine
 else
 	# linux versions don't need --create-machine.
+	echo "Using Linux version of cluster up... oc verison: $verfull"
+	echo
 	oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$verfull
 fi
 
@@ -109,7 +113,17 @@ if [ $? -ne 0 ]; then
 		echo
 		echo "Trying again to install OSE with cluster up..."
 		echo
-		oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$verfull --create-machine
+		if [ `uname` == 'Darwin' ]; then
+			# osx uses --create-machine.
+			echo "Using osX version of cluster up... oc version: $verfull"
+			echo
+			oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$verfull --create-machine
+		else
+			# linux versions don't need --create-machine.
+			echo "Using Linux version of cluster up... oc version: $verfull"
+			echo
+			oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$verfull
+		fi
 
 		if [ $? -ne 0 ]; then
 				echo
