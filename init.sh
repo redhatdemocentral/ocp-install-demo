@@ -3,7 +3,9 @@
 DOCKER_MAJOR_VER=1
 DOCKER_MINOR_VER=10
 OC_MAJOR_VER="v3"
-OC_MINOR_VER=3
+OC_MINOR_VER=4
+OC_MINI_VER=1
+OCP_VERSION="$OC_MAJOR_VER.$OC_MINOR_VER"
 
 # wipe screen.
 clear 
@@ -72,33 +74,36 @@ echo
 verfull=$(oc version | awk '/oc/{print $2}')
 verone=$(echo $verfull | awk -F[=.] '{print $1}')
 vertwo=$(echo $verfull | awk -F[=.] '{print $2}')
+verthree=$(echo $verfull | awk -F[=.] '{print $3}')
 
-if [ $verone == $OC_MAJOR_VER ] && [ $vertwo -eq $OC_MINOR_VER ]; then
+# Check version elements, first is a string so using '==', the rest are integers.
+if [ $verone == $OC_MAJOR_VER ] && [ $vertwo -eq $OC_MINOR_VER ] && [ $verthree -ge $OC_MINI_VER ]; then
 	echo "Version of installed OpenShift command line tools correct... $verfull"
 	echo
 else
-	echo "Version of installed OpenShift command line tools is $verone.$vertwo, must be v3.3 or higher..."
+	echo "Version of installed OpenShift command line tools is $verone.$vertwo.$verthree, must be $OC_MAJOR_VER.$OC_MINOR_VER.$OC_MINI_VER or higher..."
 	echo
-	echo "Download for Linux here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.3/oc-3.3.0.35-1-linux.tar.gz"
-	echo "Download for Mac here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.3/oc-3.3.1.3-1-macosx.tar.gz"
-	echo
-	exit
+	if [ `uname` == 'Darwin' ]; then
+		echo "Download for Mac here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.4/oc-3.4.1.2-1-macosx.tar.gz"
+		exit
+	else
+		echo "Download for Linux here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.4/oc-3.4.1.2-1-linux.tar.gz"
+		exit
+	fi
 fi
-
-
 
 echo "Installing OCP with cluster up..."
 echo
 if [ `uname` == 'Darwin' ]; then
 	# osx uses --create-machine.
-	echo "Using osX version of cluster up... oc version: $verfull"
+	echo "Using osX version of cluster up... installing OCP version: $OCP_VERSION"
 	echo
-	oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$verfull --create-machine
+	oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$OCP_VERSION --create-machine
 else
 	# linux versions don't need --create-machine.
-	echo "Using Linux version of cluster up... oc verison: $verfull"
+	echo "Using Linux version of cluster up... installing OCP version: $OCP_VERSION"
 	echo
-	oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$verfull
+	oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$OCP_VERSION
 fi
 
 
@@ -115,14 +120,14 @@ if [ $? -ne 0 ]; then
 		echo
 		if [ `uname` == 'Darwin' ]; then
 			# osx uses --create-machine.
-			echo "Using osX version of cluster up... oc version: $verfull"
+			echo "Using osX version of cluster up... installing second try OCP version: $OCP_VERSION"
 			echo
-			oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$verfull --create-machine
+			oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$OCP_VERSION --create-machine
 		else
 			# linux versions don't need --create-machine.
-			echo "Using Linux version of cluster up... oc version: $verfull"
+			echo "Using Linux version of cluster up... installing second try OCP version: $OCP_VERSION"
 			echo
-			oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$verfull
+			oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=$OCP_VERSION
 		fi
 
 		if [ $? -ne 0 ]; then
@@ -158,8 +163,8 @@ oc create -n openshift -f 'https://raw.githubusercontent.com/jboss-openshift/app
 echo
 echo "Updating RHEL 7 image streams..."
 echo
-oc delete -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v1.3/image-streams/image-streams-rhel7.json'
-oc create -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v1.3/image-streams/image-streams-rhel7.json'
+oc delete -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v1.4/image-streams/image-streams-rhel7.json'
+oc create -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v1.4/image-streams/image-streams-rhel7.json'
 
 echo
 echo "===================================================="

@@ -50,7 +50,9 @@ Released versions
 -----------------
 See the tagged releases for the following versions of the product:
 
-- v1.0 - OpenShift Container Platform based on OpenShift command line tools v3.3.1.3.
+- v1.1 - OpenShift Container Platform v3.4 based on OpenShift command line tools v3.4.1.2
+
+- v1.0 - OpenShift Container Platform v3.3 based on OpenShift command line tools v3.3.1.3.
 
 ![OCP Login](https://github.com/redhatdemocentral/ocp-install-demo/blob/master/docs/demo-images/ocp-login.png?raw=true)
 
