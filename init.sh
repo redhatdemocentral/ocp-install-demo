@@ -48,10 +48,38 @@ fi
 
 # Ensure docker engine available.
 #
-command -v docker -h >/dev/null 2>&1 || { echo >&2 "Docker is required but not installed yet... download here: https://www.docker.com/products/docker"; exit 1; }
+command -v docker -h  >/dev/null 2>&1 || { echo >&2 "Docker is required but not installed yet... download here: https://www.docker.com/products/docker"; exit 1; }
 echo "Docker is installed... checking for valid version..."
 echo
-		
+
+# Check that docker deamon is setup correctly.
+if [ `uname` == 'Darwin' ]; then
+	# for osX.
+	docker ps >/dev/null 2>&1
+
+	if [ $? -ne 0 ]; then
+		echo "Docker deamon is not running... please start Docker for osX..."
+		echo
+		exit
+	fi
+else
+	# for Linux versions.
+	docker ps >/dev/null 2>&1
+
+	if [ $? -ne 0 ]; then
+		echo "Docker deamon is not running... or is running insecurely..."
+		echo
+		echo "Check for instructions to run the docker deamon securely at:"
+		echo 
+		echo "    https://docs.docker.com/linux"
+		echo
+		exit
+	fi
+fi
+
+echo "Verified the Docker deamon is running..."
+echo
+
 # Check docker enging version.
 dockerverone=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $1}')
 dockervertwo=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $2}')
