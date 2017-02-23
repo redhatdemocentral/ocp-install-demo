@@ -29,14 +29,7 @@ Log in to the OCP console with:
 ```
 
 This project has an install script that is setup to allow you to re-run it without worrying about previous
-installations. If you re-run it, it removes old 'openshift' machines and reinstalls for you. If you want
-to save your installation of OCP, then use the following to stop and start instead of re-running the install
-script provided:
-```
-   $ docker-machine stop openshift
-  
-   $ docker-machine start openshift
-```
+installations. If you re-run it, it removes old 'openshift' machines and reinstalls for you. 
 
 
 Supporting Articles
