@@ -12,7 +12,7 @@ Install on your machine
 -----------------------
 1. [Download and unzip.](https://github.com/redhatdemocentral/ocp-install-demo/archive/master.zip)
 
-2. Run 'init.sh', then sit back.
+2. Run 'init.sh' or 'init.bat' file, then sit back. (Note: 'init.bat' must be run with Administrative privileges.)
 
 3. Follow displayed instructions to log in to your brand new OpenShift Container Platform!
 
@@ -44,6 +44,8 @@ Supporting Articles
 Released versions
 -----------------
 See the tagged releases for the following versions of the product:
+
+- v1.3 - OpenShift Container Platform v3.4 based on OpenShift command line tools v3.4.1.2, added Windows installer option.
 
 - v1.2 - OpenShift Container Platform v3.4 based on OpenShift command line tools v3.4.1.2, improved docker validation for Linux.
 
