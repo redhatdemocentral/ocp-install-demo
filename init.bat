@@ -165,6 +165,10 @@ echo Updating JBoss image streams...
 echo.
 call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json
 
+echo Updating Fuse image streams...
+echo.
+call oc create -n openshift -f https://raw.githubusercontent.com/jboss-fuse/application-templates/master/fis-image-streams.json
+
 echo.
 echo Updating RHEL 7 image streams...
 echo.

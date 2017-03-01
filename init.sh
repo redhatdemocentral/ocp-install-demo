@@ -144,7 +144,7 @@ if [ $? -ne 0 ]; then
 		docker-machine rm -f openshift
 
 		echo
-		echo "Trying again to install OSE with cluster up..."
+		echo "Trying again to install OCP with cluster up..."
 		echo
 		if [ `uname` == 'Darwin' ]; then
 			# osx uses --create-machine.
@@ -188,6 +188,10 @@ echo "Updating JBoss image streams..."
 echo
 oc create -n openshift -f 'https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json'
 
+echo "Updating Fuse image streams..."
+echo
+oc create -n openshift -f 'https://raw.githubusercontent.com/jboss-fuse/application-templates/master/fis-image-streams.json'
+
 echo
 echo "Updating RHEL 7 image streams..."
 echo
@@ -198,7 +202,7 @@ echo
 echo "===================================================="
 echo "=                                                  ="
 echo "= Install complete, get ready to rock your Cloud.  ="
-echo "= Look for information at end of OSE install.      ="
+echo "= Look for information at end of OCP install.      ="
 echo "=                                                  ="
 echo "=  The server is accessible via web console at:    ="
 echo "=                                                  ="
