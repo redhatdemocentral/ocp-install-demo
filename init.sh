@@ -192,6 +192,21 @@ echo "Updating Fuse image streams..."
 echo
 oc create -n openshift -f 'https://raw.githubusercontent.com/jboss-fuse/application-templates/master/fis-image-streams.json'
 
+
+echo "Update .Net image streams..."
+echo
+oc create -n openshift -f 'https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams.json'
+
+echo "Updating EAP templates..."
+echo 
+oc create -n openshift -f 'https://raw.githubusercontent.com/jboss-openshift/application-templates/master/eap/eap70-basic-s2i.json'
+
+echo "Updating Decision Server templates..."
+echo 
+oc create -n openshift -f 'https://raw.githubusercontent.com/jboss-openshift/application-templates/master/decisionserver/decisionserver63-basic-s2i.json'
+
+
+
 echo
 echo "Updating RHEL 7 image streams..."
 echo
