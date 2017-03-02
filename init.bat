@@ -165,15 +165,31 @@ echo Updating JBoss image streams...
 echo.
 call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json
 
+echo.
 echo Updating Fuse image streams...
 echo.
 call oc create -n openshift -f https://raw.githubusercontent.com/jboss-fuse/application-templates/master/fis-image-streams.json
+
+echo.
+echo Updating EAP templates...
+echo.
+call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/eap/eap70-basic-s2i.json
+
+echo. 
+echo Updating Decision Server templates...
+echo.
+call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/decisionserver/decisionserver63-basic-s2i.json
 
 echo.
 echo Updating RHEL 7 image streams...
 echo.
 call oc delete -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v1.4/image-streams/image-streams-rhel7.json
 call oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v1.4/image-streams/image-streams-rhel7.json
+
+echo.
+echo Update .Net image streams...
+echo.
+call oc create -n openshift -f https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams.json
 
 echo.
 echo ====================================================

@@ -34,6 +34,8 @@ installations. If you re-run it, it removes old 'openshift' machines and reinsta
 
 Supporting Articles
 -------------------
+- [Cloud Happiness - OpenShift Container Platform Install on Windows, why wait?](http://www.schabell.org/2017/03/cloud-happiness-openshift-container-platform-windows-install.html)
+
 - [Cloud Happiness - OpenShift Container Platform v3.4 install demo update](http://www.schabell.org/2017/02/cloud-happiness-openshift-container-platform-install-updated.html)
 
 - [Holiday Homework - Red Hat Cloud demo updates](http://www.schabell.org/2016/12/holiday-homework-redhat-cloud-demo-updates.html)
@@ -44,6 +46,8 @@ Supporting Articles
 Released versions
 -----------------
 See the tagged releases for the following versions of the product:
+
+- v1.4 - OpenShift Container Platform v3.4 based on OpenShift command line tools v3.4.1.2, added more JBoss product templates.
 
 - v1.3 - OpenShift Container Platform v3.4 based on OpenShift command line tools v3.4.1.2, added Windows installer option.
 
