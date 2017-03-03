@@ -47,6 +47,8 @@ Released versions
 -----------------
 See the tagged releases for the following versions of the product:
 
+- v1.5 - OpenShift Container Platform v3.4 based on OpenShift command line tools v3.4.1.2-fixed, with boot2docker using v17.03.
+
 - v1.4 - OpenShift Container Platform v3.4 based on OpenShift command line tools v3.4.1.2, added more JBoss product templates.
 
 - v1.3 - OpenShift Container Platform v3.4 based on OpenShift command line tools v3.4.1.2, added Windows installer option.
