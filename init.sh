@@ -6,6 +6,7 @@ OC_MAJOR_VER="v3"
 OC_MINOR_VER=4
 OC_MINI_VER=1
 OCP_VERSION="$OC_MAJOR_VER.$OC_MINOR_VER"
+OCP_FIX="v1.5.0-alpha"
 
 # wipe screen.
 clear 
@@ -104,9 +105,13 @@ verone=$(echo $verfull | awk -F[=.] '{print $1}')
 vertwo=$(echo $verfull | awk -F[=.] '{print $2}')
 verthree=$(echo $verfull | awk -F[=.] '{print $3}')
 
+echo 
+echo "Version is: $verfull and $verone.$vertwo.$verthree"
+echo 
+
 # Check version elements, first is a string so using '==', the rest are integers.
-if [ $verone == $OC_MAJOR_VER ] && [ $vertwo -eq $OC_MINOR_VER ] && [ $verthree -ge $OC_MINI_VER ]; then
-	echo "Version of installed OpenShift command line tools correct... $verfull"
+if [ "$verone.$vertwo.$verthree" == $OCP_FIX ] || ( [ $verone == $OC_MAJOR_VER ] && [ $vertwo -eq $OC_MINOR_VER ] && [ $verthree -ge $OC_MINI_VER ] ); then
+	echo "Version of installed OpenShift command line tools correct... $verone.$vertwo.$verthree"
 	echo
 else
 	echo "Version of installed OpenShift command line tools is $verone.$vertwo.$verthree, must be $OC_MAJOR_VER.$OC_MINOR_VER.$OC_MINI_VER or higher..."
