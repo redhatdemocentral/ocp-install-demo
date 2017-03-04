@@ -34,8 +34,14 @@ build_os()
 	#
 	target_os="$1/amd64"
 
+	# Forcing you to login.
+	#
+	oc login --password=devel --username=openshift-dev
+
 	# Try to create new project, if fails not a problem.
 	#
+	echo "Creating a new project for you..."
+	echo
 	oc new-project my-project
 
   if [ $? -ne 0 ]; then
@@ -47,6 +53,8 @@ build_os()
 	
 	# Select correct builder based on given os.
 	#
+	echo "Starting to build a new fixed oc client for your $1 system..."
+	echo
 	oc new-app -f $BUILD_FILE/oc-builder-$1.yaml 
 
 	if [ $? -ne 0 ]; then
@@ -101,3 +109,6 @@ else
 	exit
 fi
 
+echo
+echo "Login to OpenShift and wait for the build to finish and find your deployed oc tool..."
+echo
