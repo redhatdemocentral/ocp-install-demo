@@ -1,9 +1,9 @@
 #!/bin/sh 
 
-SRC_URL=https://github.com/csrwng/origin.git
+SRC_URL=https://github.com/eschabell/origin.git
 SRC_REF=docker_version_warning
 OS_TYPE=darwin/amd64 
-BUILD_FILE=https://raw.githubusercontent.com/csrwng/build-origin/master/origin-builder.yaml
+BUILD_FILE=https://raw.githubusercontent.com/eschabell/build-origin/master/origin-builder.yaml
 
 # prints the documentation for this script.
 function print_docs() 
@@ -28,7 +28,7 @@ function print_docs()
 
 build_os()
 {
-	# Incoming parameter, should be 'linux', 'osx' or 'windows'.
+	# Incoming parameter, should be 'linux', 'darwin' or 'windows'.
 	#
 	target_os="$1/amd64"
 
@@ -47,7 +47,6 @@ build_os()
 		echo Error occurred during 'oc new-project' command!
 		exit
 	fi	
-
 	
 	# Select correct builder based on given os.
 	#
