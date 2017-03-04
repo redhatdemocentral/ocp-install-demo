@@ -61,15 +61,15 @@ echo
 if [ $# -eq 1 ]; then
 	echo "Validating argument: $1"
 	echo
-	if [ $1 -eq "linux" ]; then
+	if [ $1 == "linux" ]; then
 		echo "Starting build of oc with fix for Linux systems..."
 		echo
 		build_os $1
-	elif [ $1 -eq "windows" ]; then
+	elif [ $1 == "windows" ]; then
 		echo "Starting build of oc with fix for Windows systems..."
 		echo
 		build_os $1
-	elif [ $1 -eq "windows" ]; then
+	elif [ $1 == "osx" ]; then
 		echo "Starting build of oc with fix for osX systems..."
 		echo
 		build_os $1
