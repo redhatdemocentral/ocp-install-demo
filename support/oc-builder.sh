@@ -83,15 +83,15 @@ if [ $# -eq 1 ]; then
 	if [ $1 == "linux" ]; then
 		echo "Starting build of oc with fix for Linux systems..."
 		echo
-		build_os $1
+		build_os "linux"
 	elif [ $1 == "windows" ]; then
 		echo "Starting build of oc with fix for Windows systems..."
 		echo
-		build_os $1
+		build_os "windows"
 	elif [ $1 == "osx" ]; then
 		echo "Starting build of oc with fix for osX systems..."
 		echo
-		build_os $1
+		build_os "darwin"
 	else
 	  print_docs
 	  exit	
