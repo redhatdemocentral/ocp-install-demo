@@ -31,6 +31,18 @@ Log in to the OCP console with:
 This project has an install script that is setup to allow you to re-run it without worrying about previous
 installations. If you re-run it, it removes old 'openshift' machines and reinstalls for you. 
 
+There is an oc-builder application in the support directory to fix broken oc versions caught by the boot2docker updates using v17.03
+and producing the error:
+
+   ```
+   -- Checking Docker version ... FAIL
+   Error: Minor number must not contain leading zeroes "03"
+   ```
+After logging into a running OpenShift cluster, run this and pass your os (linux, osx or windows):
+
+   ```
+   $./oc-builder.sh [ linux | osx | windows ]
+   ```
 
 Supporting Articles
 -------------------
