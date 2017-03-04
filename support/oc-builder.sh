@@ -3,7 +3,7 @@
 SRC_URL=https://github.com/csrwng/origin.git
 SRC_REF=docker_version_warning
 OS_TYPE=darwin/amd64 
-BUILD_FILE=https://raw.githubusercontent.com/eschabell/build-origin/master/origin-builder.yaml
+BUILD_FILE=https://raw.githubusercontent.com/csrwng/build-origin/master/origin-builder.yaml
 
 # prints the documentation for this script.
 function print_docs() 
@@ -52,6 +52,8 @@ build_os()
 	# Select correct builder based on given os.
 	#
 	echo "Starting to build a new fixed oc client for your $1 system..."
+	echo
+	echo "Building using: $BUILD_FILE, source url: $SRC_URL, ref: $SRC_REF and platform: $target_os"
 	echo
 	oc new-app -f $BUILD_FILE -p SOURCE_URL=$SRC_URL -p SOURCE_REF=$SRC_REF -p PLATFORM=$target_os 
 
