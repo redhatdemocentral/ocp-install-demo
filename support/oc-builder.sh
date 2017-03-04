@@ -1,11 +1,9 @@
 #!/bin/sh 
 
-SRC_URL=https://github.com/eschabell/origin.git
+SRC_URL=https://github.com/csrwng/origin.git
 SRC_REF=docker_version_warning
 OS_TYPE=darwin/amd64 
-BUILD_FILE="https://raw.githubusercontent.com/eschabell/build-origin/master/"
-#OS_TYPE=linux/amd64 
-#OS_TYPE=windows/amd64 
+BUILD_FILE=https://raw.githubusercontent.com/eschabell/build-origin/master/origin-builder.yaml
 
 # prints the documentation for this script.
 function print_docs() 
@@ -55,7 +53,7 @@ build_os()
 	#
 	echo "Starting to build a new fixed oc client for your $1 system..."
 	echo
-	oc new-app -f $BUILD_FILE/oc-builder-$1.yaml 
+	oc new-app -f $BUILD_FILE -p SOURCE_URL=$SRC_URL -p SOURCE_REF=$SRC_REF -p PLATFORM=$target_os 
 
 	if [ $? -ne 0 ]; then
 		echo
