@@ -37,10 +37,23 @@ build_os()
 	# Try to create new project, if fails not a problem.
 	#
 	oc new-project my-project
+
+  if [ $? -ne 0 ]; then
+		echo
+		echo Error occurred during 'oc new-project' command!
+		exit
+	fi	
+
 	
 	# Select correct builder based on given os.
 	#
 	oc new-app -f $BUILD_FILE/oc-builder-$1.yaml 
+
+	if [ $? -ne 0 ]; then
+		echo
+		echo Error occurred during 'oc new-app' command!
+		exit
+	fi
 }
 
 # wipe screen.

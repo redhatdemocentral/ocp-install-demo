@@ -38,7 +38,7 @@ and producing the error:
    -- Checking Docker version ... FAIL
    Error: Minor number must not contain leading zeroes "03"
    ```
-After logging into a running OpenShift cluster, run this and pass your os (linux, osx or windows):
+After logging into a running OpenShift cluster, run this:
 
    ```
    $./oc-builder.sh [ linux | osx | windows ]
