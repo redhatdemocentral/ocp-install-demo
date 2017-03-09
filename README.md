@@ -20,13 +20,29 @@ Install on your machine
 Notes
 -----
 Log in to the OCP console with:
-```
+   
+   ```
    Developer user:  openshift-dev
    Developer pass:  devel
 
    Admin user: admin
    Admin pass: admin
-```
+   ```
+
+If you recieve the following error, on Linux:
+
+   ```
+   Error: did not detect an --insecure-registry argument on the Docker daemon
+   ```
+
+Then ensure that the Docker daemon is running with the following argument by:
+
+   ```
+   # Add the following to /etc/sysconfig/docker file and
+   # restart the docker service:
+   #
+   INSECURE_REGISTRY='--insecure-registry 172.30.0.0/16'
+   ```
 
 This project has an install script that is setup to allow you to re-run it without worrying about previous
 installations. If you re-run it, it removes old 'openshift' machines and reinstalls for you. 
