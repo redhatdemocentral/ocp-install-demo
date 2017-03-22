@@ -84,7 +84,8 @@ echo
 # Check docker enging version.
 dockerverone=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $1}')
 dockervertwo=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $2}')
-if [ $dockerverone -eq $DOCKER_MAJOR_VER ] && [ $dockervertwo -ge $DOCKER_MINOR_VER ]; then
+#if [ $dockerverone -eq $DOCKER_MAJOR_VER ] && [ $dockervertwo -ge $DOCKER_MINOR_VER ]; then
+if [ $dockerverone -gt $DOCKER_MAJOR_VER  ] || ([ $dockerverone -eq $DOCKER_MAJOR_VER  ] && [ $dockervertwo -ge $DOCKER_MINOR_VER ]) ; then
 	echo "Valid version of docker engine found... $dockerverone.$dockervertwo"
 	echo
 else
