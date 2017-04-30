@@ -1,7 +1,7 @@
 #!/bin/sh 
 
 DOCKER_MAJOR_VER=1
-DOCKER_MINOR_VER=10
+DOCKER_MINOR_VER=13
 OC_MAJOR_VER="v3"
 OC_MINOR_VER=4
 OC_MINI_VER=1
@@ -88,14 +88,14 @@ if [ $dockerverone -eq $DOCKER_MAJOR_VER ] && [ $dockervertwo -ge $DOCKER_MINOR_
 	echo "Valid version of docker engine found... $dockerverone.$dockervertwo"
 	echo
 else
-	echo "Docker engine version $dockerverone.$dockervertwo found... need 1.10+, please update: https://www.docker.com/products/docker"
+	echo "Docker engine version $dockerverone.$dockervertwo found... need 1.13, please install: https://drive.google.com/open?id=0B9WSViV5BZ4aVXV5U3F4LVVmWVk"
 	echo
 	exit
 fi
 
 # Ensure OpenShift command line tools available.
 #
-command -v oc help >/dev/null 2>&1 || { echo >&2 "OpenShift CLI tooling is required but not installed yet... download here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.3/oc-3.3.1.3-1-macosx.tar.gz"; exit 1; }
+command -v oc help >/dev/null 2>&1 || { echo >&2 "OpenShift CLI tooling is required but not installed yet... download here: https://drive.google.com/open?id=0B9WSViV5BZ4aVXV5U3F4LVVmWVk"; exit 1; }
 echo "OpenShift command line tools installed... checking for valid version..."
 echo
 
@@ -117,10 +117,10 @@ else
 	echo "Version of installed OpenShift command line tools is $verone.$vertwo.$verthree, must be $OC_MAJOR_VER.$OC_MINOR_VER.$OC_MINI_VER or higher..."
 	echo
 	if [ `uname` == 'Darwin' ]; then
-		echo "Download for Mac here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.4/oc-3.4.1.2-1-macosx.tar.gz"
+		echo "Download for Mac here: https://drive.google.com/open?id=0B9WSViV5BZ4aVXV5U3F4LVVmWVk"
 		exit
 	else
-		echo "Download for Linux here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.4/oc-3.4.1.2-1-linux.tar.gz"
+		echo "Download for Linux here: https://drive.google.com/open?id=0B9WSViV5BZ4aVXV5U3F4LVVmWVk"
 		exit
 	fi
 fi

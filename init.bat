@@ -3,7 +3,7 @@ setlocal
 
 set PROJECT_HOME=%~dp0
 set DOCKER_MAJOR_VER=1
-set DOCKER_MINOR_VER=10
+set DOCKER_MINOR_VER=13
 set OC_MAJOR_VER=v3
 set OC_MINOR_VER=4
 set OC_MINI_VER=1
@@ -88,7 +88,7 @@ GOTO :passDockerTestContinue
 )
 
 REM Print Failure 
-echo Docker engine version %dockerverone%.%dockervertwo% found... need 1.10+, please update: https://www.docker.com/products/docker
+echo Docker engine version %dockerverone%.%dockervertwo% found... need 1.13, please update: https://drive.google.com/open?id=0B9WSViV5BZ4aVXV5U3F4LVVmWVk
 echo
 GOTO :EOF
 
@@ -103,7 +103,7 @@ REM Ensure OpenShift command line tools available.
 call oc help >nul 2>&1
 
 if %ERRORLEVEL% NEQ 0 (
-  echo OpenShift CLI tooling is required but not installed yet... download here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.4/oc-3.4.1.2-1-windows.zip
+  echo OpenShift CLI tooling is required but not installed yet... download here: https://drive.google.com/open?id=0B9WSViV5BZ4aVXV5U3F4LVVmWVk
   GOTO :EOF
 ) else (
   echo OpenShift command line tools installed... checking for valid version...
@@ -130,7 +130,7 @@ if %OC_MAJOR_VER% EQU %verone% if %OC_MINOR_VER% EQU %vertwo% if %OC_MINI_VER% E
 
 echo Version of installed OpenShift command line tools is %verone%.%vertwo%.%verthree%, must be %OC_MAJOR_VER%.%OC_MINOR_VER%.%OC_MINI_VER% or higher...
 echo.
-echo Download for Windows here: https://s3.amazonaws.com/oso-preview-docker-registry/client-tools/3.4/oc-3.4.1.2-1-windows.zip
+echo Download for Windows here: https://drive.google.com/open?id=0B9WSViV5BZ4aVXV5U3F4LVVmWVk
 GOTO :EOF
 
 :passOcTestContinue
