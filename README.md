@@ -62,6 +62,8 @@ After logging into a running OpenShift cluster, run this:
 
 Supporting Articles
 -------------------
+- [Get hands-on with AppDev Cloud free online workshop.](http://appdevcloudworkshop.github.io)
+
 - [Cloud Happiness - OpenShift Container Platform Install on Windows, why wait?](http://www.schabell.org/2017/03/cloud-happiness-openshift-container-platform-windows-install.html)
 
 - [Cloud Happiness - OpenShift Container Platform v3.4 install demo update](http://www.schabell.org/2017/02/cloud-happiness-openshift-container-platform-install-updated.html)
