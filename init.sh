@@ -122,7 +122,7 @@ fi
 
 echo "Setting up OpenShift docker machine..."
 echo
-docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "4096" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
+docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "12288" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
 
 if [ $? -ne 0 ]; then
 		echo
@@ -134,7 +134,7 @@ if [ $? -ne 0 ]; then
 
 		echo "Setting up new OpenShift docker machine..."
     echo
-    docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "4096" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
+    docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "12288" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
 
 		if [ $? -ne 0 ]; then
 				echo
@@ -160,7 +160,7 @@ if [ $? -ne 0 ]; then
 
     echo "Setting up new OpenShift docker machine..."
     echo
-    docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "4096" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
+    docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "12288" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
 
 		echo
 		echo "Trying again to install OCP with cluster up..."
@@ -211,6 +211,7 @@ if [ $? -ne 0 ]; then
 	if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
 		echo
+		docker-machine rm -f openshift
 		exit
 	fi
 fi
@@ -232,6 +233,7 @@ if [ $? -ne 0 ]; then
 	if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
 		echo
+		docker-machine rm -f openshift
 		exit
 	fi
 fi
@@ -253,6 +255,7 @@ if [ $? -ne 0 ]; then
 	if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
 		echo
+		docker-machine rm -f openshift
 		exit
 	fi
 fi
@@ -274,6 +277,7 @@ if [ $? -ne 0 ]; then
 	if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
 		echo
+		docker-machine rm -f openshift
 		exit
 	fi
 fi
@@ -297,6 +301,7 @@ if [ $? -ne 0 ]; then
 	if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
 		echo
+		docker-machine rm -f openshift
 		exit
 	fi
 fi
@@ -318,6 +323,7 @@ if [ $? -ne 0 ]; then
 	if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
 		echo
+		docker-machine rm -f openshift
 		exit
 	fi
 fi

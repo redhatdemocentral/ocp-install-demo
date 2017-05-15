@@ -137,7 +137,7 @@ GOTO :EOF
 
 echo Setting up OpenShift docker machine...
 echo.
-call docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "4096" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift
+call docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "12288" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift
 
 if %ERRORLEVEL% NEQ 0 (
  echo.
@@ -149,7 +149,7 @@ if %ERRORLEVEL% NEQ 0 (
  
  echo Setting up new OpenShift docker machine...
  echo.
- call docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "4096" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift
+ call docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "12288" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift
 
  if %ERRORLEVEL% NEQ 0 (
   echo.
@@ -201,6 +201,7 @@ if %ERRORLEVEL% NEQ 0 (
 	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
 		echo.
+    call docker-machine rm -f openshift
 		GOTO :EOF
   )
 )
@@ -221,6 +222,7 @@ if %ERRORLEVEL% NEQ 0 (
 	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
 		echo.
+    call docker-machine rm -f openshift
 		GOTO :EOF
   )
 )
@@ -241,6 +243,7 @@ if %ERRORLEVEL% NEQ 0 (
 	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
 		echo.
+    call docker-machine rm -f openshift
 		GOTO :EOF
   )
 )
@@ -261,6 +264,7 @@ if %ERRORLEVEL% NEQ 0 (
 	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
 		echo.
+    call docker-machine rm -f openshift
 		GOTO :EOF
   )
 )
@@ -283,6 +287,7 @@ if %ERRORLEVEL% NEQ 0 (
 	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
 		echo.
+    call docker-machine rm -f openshift
 		GOTO :EOF
   )
 )
@@ -304,6 +309,7 @@ if %ERRORLEVEL% NEQ 0 (
 	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
 		echo.
+    call docker-machine rm -f openshift
 		GOTO :EOF
   )
 )
