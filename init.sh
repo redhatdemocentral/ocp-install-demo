@@ -104,10 +104,6 @@ verone=$(echo $verfull | awk -F[=.] '{print $1}')
 vertwo=$(echo $verfull | awk -F[=.] '{print $2}')
 verthree=$(echo $verfull | awk -F[=.] '{print $3}')
 
-echo 
-echo "Version is: $verfull and $verone.$vertwo.$verthree"
-echo 
-
 # Check version elements, first is a string so using '==', the rest are integers.
 if [ $verone == $OC_MAJOR_VER ] && [ $vertwo -eq $OC_MINOR_VER ] && [ $verthree -ge $OC_MINI_VER ]; then
 	echo "Version of installed OpenShift command line tools correct... $verone.$vertwo.$verthree"
