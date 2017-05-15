@@ -5,8 +5,8 @@ set PROJECT_HOME=%~dp0
 set DOCKER_MAJOR_VER=1
 set DOCKER_MINOR_VER=13
 set OC_MAJOR_VER=v3
-set OC_MINOR_VER=4
-set OC_MINI_VER=1
+set OC_MINOR_VER=5
+set OC_MINI_VER=5
 set OCP_VERSION=%OC_MAJOR_VER%.%OC_MINOR_VER%
 
 REM wipe screen.
@@ -128,18 +128,43 @@ if %OC_MAJOR_VER% EQU %verone% if %OC_MINOR_VER% EQU %vertwo% if %OC_MINI_VER% E
  GOTO :passOcTestContinue
 )
 
-echo Version of installed OpenShift command line tools is %verone%.%vertwo%.%verthree%, must be %OC_MAJOR_VER%.%OC_MINOR_VER%.%OC_MINI_VER% or higher...
+echo Version of installed OpenShift command line tools is %verone%.%vertwo%.%verthree%, must be %OC_MAJOR_VER%.%OC_MINOR_VER%.%OC_MINI_VER%...
 echo.
 echo Download for Windows here: https://drive.google.com/open?id=0B9WSViV5BZ4aVXV5U3F4LVVmWVk
 GOTO :EOF
 
 :passOcTestContinue
 
+echo Setting up OpenShift docker machine...
+echo.
+call docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "12288" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift
+
+if %ERRORLEVEL% NEQ 0 (
+ echo.
+ echo Error occurred during openshift docker machine creation...
+ echo.
+ echo Cleaning out existing 'openshift' machine...
+ echo.
+ call docker-machine rm -f openshift
+ 
+ echo Setting up new OpenShift docker machine...
+ echo.
+ call docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "12288" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift
+
+ if %ERRORLEVEL% NEQ 0 (
+  echo.
+  echo Problem with docker machine creation that I can't resolve, please raise an issue and add error output:
+  echo.
+  echo    https://github.com/redhatdemocentral/ocp-install-demo/issues/new
+  echo.
+  GOTO :EOF
+ )
+)
 
 echo Installing OCP with cluster up...
 echo.
 
-call oc cluster up --image=registry.access.redhat.com/openshift3/ose --version=%OCP_VERSION%
+call oc cluster up --docker-machine=openshift --image=registry.access.redhat.com/openshift3/ose --version=%OCP_VERSION%
 
 if %ERRORLEVEL% NEQ 0 (
   echo.
@@ -165,20 +190,84 @@ echo Updating JBoss image streams...
 echo.
 call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json
 
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem with accessing JBoss EAP product streams for OCP.
+	echo.
+  echo Trying again.
+	echo.
+  call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json
+	
+	if %ERRORLEVELS% NEQ 0 (
+		echo Failed again, exiting, check output messages and network connectivity before running install again.
+		echo.
+    call docker-machine rm -f openshift
+		GOTO :EOF
+  )
+)
+
 echo.
 echo Updating Fuse image streams...
 echo.
 call oc create -n openshift -f https://raw.githubusercontent.com/jboss-fuse/application-templates/master/fis-image-streams.json
+
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem with accessing Fuse Integration product streams for OCP.
+	echo.
+  echo Trying again.
+	echo.
+  call oc create -n openshift -f https://raw.githubusercontent.com/jboss-fuse/application-templates/master/fis-image-streams.json
+	
+	if %ERRORLEVELS% NEQ 0 (
+		echo Failed again, exiting, check output messages and network connectivity before running install again.
+		echo.
+    call docker-machine rm -f openshift
+		GOTO :EOF
+  )
+)
 
 echo.
 echo Updating EAP templates...
 echo.
 call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/eap/eap70-basic-s2i.json
 
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem with accessing JBoss EAP product streams for OCP.
+	echo.
+  echo Trying again.
+	echo.
+  call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/eap/eap70-basic-s2i.json
+	
+	if %ERRORLEVELS% NEQ 0 (
+		echo Failed again, exiting, check output messages and network connectivity before running install again.
+		echo.
+    call docker-machine rm -f openshift
+		GOTO :EOF
+  )
+)
+
 echo. 
 echo Updating Decision Server templates...
 echo.
 call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/decisionserver/decisionserver63-basic-s2i.json
+
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem with accessing JBoss BRMS product streams for OCP.
+	echo.
+  echo Trying again.
+	echo.
+  call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/decisionserver/decisionserver63-basic-s2i.json
+	
+	if %ERRORLEVELS% NEQ 0 (
+		echo Failed again, exiting, check output messages and network connectivity before running install again.
+		echo.
+    call docker-machine rm -f openshift
+		GOTO :EOF
+  )
+)
 
 echo.
 echo Updating RHEL 7 image streams...
@@ -186,10 +275,44 @@ echo.
 call oc delete -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v1.4/image-streams/image-streams-rhel7.json
 call oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v1.4/image-streams/image-streams-rhel7.json
 
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem with accessing RHEL product streams for OCP.
+	echo.
+  echo Trying again.
+	echo.
+  call oc delete -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v1.4/image-streams/image-streams-rhel7.json
+  call oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v1.4/image-streams/image-streams-rhel7.json
+	
+	if %ERRORLEVELS% NEQ 0 (
+		echo Failed again, exiting, check output messages and network connectivity before running install again.
+		echo.
+    call docker-machine rm -f openshift
+		GOTO :EOF
+  )
+)
+
+
 echo.
 echo Update .Net image streams...
 echo.
 call oc create -n openshift -f https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams.json
+
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem with accessing .Net image streams for OCP.
+	echo.
+  echo Trying again.
+	echo.
+  call oc create -n openshift -f https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams.json
+	
+	if %ERRORLEVELS% NEQ 0 (
+		echo Failed again, exiting, check output messages and network connectivity before running install again.
+		echo.
+    call docker-machine rm -f openshift
+		GOTO :EOF
+  )
+)
 
 echo.
 echo ====================================================
