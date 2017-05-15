@@ -216,6 +216,7 @@ if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
 		echo
 		exit
+	fi
 fi
 
 echo
@@ -236,6 +237,7 @@ if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
 		echo
 		exit
+	fi
 fi
 
 echo
@@ -256,6 +258,7 @@ if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
 		echo
 		exit
+	fi
 fi
 
 echo
@@ -276,6 +279,7 @@ if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
 		echo
 		exit
+	fi
 fi
 
 echo
@@ -298,6 +302,7 @@ if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
 		echo
 		exit
+	fi
 fi
 
 echo
@@ -318,6 +323,7 @@ if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
 		echo
 		exit
+	fi
 fi
 
 echo

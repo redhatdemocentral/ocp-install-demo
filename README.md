@@ -63,6 +63,8 @@ Released versions
 -----------------
 See the tagged releases for the following versions of the product:
 
+- v1.6 - OpenShift Container Platform v3.5 based on OpenShift command line tools v3.5.5.5.
+
 - v1.5 - OpenShift Container Platform v3.4 based on OpenShift command line tools v3.4.1.2-fixed.
 
 - v1.4 - OpenShift Container Platform v3.4 based on OpenShift command line tools v3.4.1.2, added more JBoss product templates.
