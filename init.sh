@@ -7,6 +7,9 @@ OC_MINOR_VER=5
 OC_MINI_VER=5
 OCP_VERSION="$OC_MAJOR_VER.$OC_MINOR_VER"
 
+# sets RAM usage limit for OCP.
+VBOX_MEMORY=12288
+
 # wipe screen.
 clear 
 
@@ -122,7 +125,7 @@ fi
 
 echo "Setting up OpenShift docker machine..."
 echo
-docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "12288" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
+docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "$VBOX_MEMORY" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
 
 if [ $? -ne 0 ]; then
 		echo
@@ -134,7 +137,7 @@ if [ $? -ne 0 ]; then
 
 		echo "Setting up new OpenShift docker machine..."
     echo
-    docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "12288" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
+    docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "$VBOX_MEMORY" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
 
 		if [ $? -ne 0 ]; then
 				echo
@@ -160,7 +163,7 @@ if [ $? -ne 0 ]; then
 
     echo "Setting up new OpenShift docker machine..."
     echo
-    docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "12288" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
+    docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "$VBOX_MEMORY" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
 
 		echo
 		echo "Trying again to install OCP with cluster up..."
