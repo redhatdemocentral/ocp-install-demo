@@ -51,7 +51,7 @@ fi
 
 # Ensure docker engine available.
 #
-command -v docker -h  >/dev/null 2>&1 || { echo >&2 "Docker is required but not installed yet... download here: https://www.docker.com/products/docker"; exit 1; }
+command -v docker -h  >/dev/null 2>&1 || { echo >&2 "Docker is required but not installed yet... download here: https://drive.google.com/open?id=0B9WSViV5BZ4aTV82ZTJ2TFp5U0E"; exit 1; }
 echo "Docker is installed... checking for valid version..."
 echo
 
@@ -72,9 +72,7 @@ else
 	if [ $? -ne 0 ]; then
 		echo "Docker deamon is not running... or is running insecurely..."
 		echo
-		echo "Check for instructions to run the docker deamon securely at:"
-		echo 
-		echo "    https://docs.docker.com/linux"
+		echo "Check for instructions to run the docker deamon securely in NOTES section of this projects Readme.md file."
 		echo
 		exit
 	fi

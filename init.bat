@@ -48,7 +48,7 @@ REM Ensure Docker is installed
 call where docker >nul 2>&1
 
 if %ERRORLEVEL% NEQ 0 (
-  echo Docker is required but not installed yet... download here: https://www.docker.com/products/docker
+  echo Docker is required but not installed yet... download here: https://drive.google.com/open?id=0B9WSViV5BZ4aTV82ZTJ2TFp5U0E
   GOTO :EOF
 ) else (
   echo Docker is installed... checking for valid version...
@@ -59,9 +59,8 @@ call docker ps >nul 2>&1
 if %ERRORLEVEL% NEQ 0 (
   echo Docker deamon is not running... or is running insecurely...
   echo.
-  echo Check for instructions to run the docker deamon securely at:
+  echo Check for instructions to run the docker deamon securely see this projects Readme.md file.
   echo.
-  echo     https://docs.docker.com/linux
   echo.
   GOTO :EOF
 )
