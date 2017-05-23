@@ -7,6 +7,8 @@ tools used to create and deploy containers for large data centers.
 This project requires a docker engine, OpenShift command line tools and VirtualBox, but these checks happen when you run the
 installation and point you to what is missing. It also checks that you have the right versions running too.
 
+Pro Tip: Pay close attention to conosle output, will guide you to dependencies you need if missing.
+
 
 Install on your machine
 -----------------------
