@@ -51,7 +51,7 @@ fi
 
 # Ensure docker engine available.
 #
-command -v docker -h  >/dev/null 2>&1 || { echo >&2 "Docker is required but not installed yet... download mac version here: https://download.docker.com/mac/stable/1.13.1.15353/Docker.dmg or find Linux install instructions here: https://drive.google.com/open?id=0B9WSViV5BZ4aTV82ZTJ2TFp5U0E"; exit 1; }
+command -v docker -h  >/dev/null 2>&1 || { echo >&2 "Docker is required but not installed yet... download here: https://store.docker.com/search?offering=community&type=edition"; exit 1; }
 echo "Docker is installed... checking for valid version..."
 echo
 
@@ -88,7 +88,7 @@ if [ $dockerverone -eq $DOCKER_MAJOR_VER ] && [ $dockervertwo -ge $DOCKER_MINOR_
 	echo "Valid version of docker engine found... $dockerverone.$dockervertwo"
 	echo
 else
-	echo "Docker engine version $dockerverone.$dockervertwo found... need 1.13, please install: https://download.docker.com/mac/stable/1.13.1.15353/Docker.dmg"
+	echo "Docker engine version $dockerverone.$dockervertwo found... need $DOCKER_MAJOR_VER.$DOCKER_MINOR_VER, please install: https://store.docker.com/search?offering=community&type=edition"
 	echo
 	exit
 fi

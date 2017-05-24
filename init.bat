@@ -48,7 +48,7 @@ REM Ensure Docker is installed
 call where docker >nul 2>&1
 
 if %ERRORLEVEL% NEQ 0 (
-  echo Docker is required but not installed yet... download here: https://drive.google.com/open?id=0B9WSViV5BZ4aTV82ZTJ2TFp5U0E
+  echo Docker is required but not installed yet... download here: https://store.docker.com/search?offering=community&type=edition
   GOTO :EOF
 ) else (
   echo Docker is installed... checking for valid version...
@@ -90,7 +90,7 @@ GOTO :passDockerTestContinue
 )
 
 REM Print Failure 
-echo Docker engine version %dockerverone%.%dockervertwo% found... need 1.13, please update: https://drive.google.com/open?id=0B9WSViV5BZ4aVXV5U3F4LVVmWVk
+echo Docker engine version %dockerverone%.%dockervertwo% found... need %DOCKER_MAJOR_VER%.%DOCKER_MINOR_VER%, please update: https://store.docker.com/search?offering=community&type=edition
 echo
 GOTO :EOF
 
