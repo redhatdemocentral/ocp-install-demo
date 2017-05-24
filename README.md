@@ -12,7 +12,7 @@ listed here and the install provides pointers to downloads if missing:
 
    ```
    1. VirtualBox for Windows and OSX
-   2. Docker engine v1.13
+   2. Docker engine version 17.03
    3. OpenShift Client (oc) v3.5.5.5
    ```
 
