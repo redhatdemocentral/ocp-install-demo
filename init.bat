@@ -90,7 +90,7 @@ GOTO :passDockerTestContinue
 )
 
 REM Print Failure 
-echo Docker engine version %dockerverone%.%dockervertwo% found... need %DOCKER_MAJOR_VER%.%DOCKER_MINOR_VER%, please update: https://store.docker.com/search?offering=community&type=edition
+echo Docker engine version %dockerverone%.%dockervertwo% found... need %DOCKER_MAJOR_VER%.%DOCKER_MINOR_VER% or higher, please update: https://store.docker.com/search?offering=community&type=edition
 echo
 GOTO :EOF
 
@@ -166,7 +166,7 @@ if %ERRORLEVEL% NEQ 0 (
 echo Installing OCP with cluster up...
 echo.
 
-call oc cluster up --docker-machine=openshift --image=registry.access.redhat.com/openshift3/ose --version=%OCP_VERSION%
+call oc cluster up --image=registry.access.redhat.com/openshift3/ose --host-data-dir=/var/lib/boot2docker/ocp-data  --docker-machine=openshift --host-config-dir=/var/lib/boot2docker/ocp-config --use-existing-config=true --host-pv-dir=/var/lib/boot2docker/ocp-pv
 
 if %ERRORLEVEL% NEQ 0 (
   echo.
@@ -324,7 +324,7 @@ echo = Look for information at end of OSE install.      =
 echo =                                                  =
 echo =  The server is accessible via web console at:    =
 echo =                                                  =
-echo =	  %OCP_IP%
+echo =	  %OCP_IP%               =
 echo =                                                  =
 echo =  Log in as user: openshift-dev                   =
 echo =        password: devel                           =
@@ -336,6 +336,10 @@ echo =  Now get your Red Hat Demo Central example       =
 echo =  projects here:                                  =
 echo =                                                  =
 echo =     https://github.com/redhatdemocentral         =
+echo =                                                  =
+echo =  To stop and restart your OCP cluster with       =
+echo =  installed containers, see Readme.md in the      =
+echo =  NOTES section for details.                      =
 echo =                                                  =
 echo =  When finished, clean up your demo with:         =
 echo =                                                  =

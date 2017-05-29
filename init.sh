@@ -88,7 +88,7 @@ if [ $dockerverone -eq $DOCKER_MAJOR_VER ] && [ $dockervertwo -ge $DOCKER_MINOR_
 	echo "Valid version of docker engine found... $dockerverone.$dockervertwo"
 	echo
 else
-	echo "Docker engine version $dockerverone.$dockervertwo found... need $DOCKER_MAJOR_VER.$DOCKER_MINOR_VER, please install: https://store.docker.com/search?offering=community&type=edition"
+	echo "Docker engine version $dockerverone.$dockervertwo found... need $DOCKER_MAJOR_VER.$DOCKER_MINOR_VER or higher, please install: https://store.docker.com/search?offering=community&type=edition"
 	echo
 	exit
 fi
@@ -123,7 +123,7 @@ fi
 
 echo "Setting up OpenShift docker machine..."
 echo
-docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "$VBOX_MEMORY" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
+docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "$VBOX_MEMORY" --engine-insecure-registry 172.30.0.0/16  --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
 
 if [ $? -ne 0 ]; then
 		echo
@@ -149,7 +149,8 @@ fi
 
 echo "Installing OCP with cluster up..."
 echo
-oc cluster up --docker-machine=openshift --image=registry.access.redhat.com/openshift3/ose --version=$OCP_VERSION
+oc cluster up --image=registry.access.redhat.com/openshift3/ose --host-data-dir=/var/lib/boot2docker/ocp-data --docker-machine=openshift --host-config-dir=/var/lib/boot2docker/ocp-config --use-existing-config=true --version=$OCP_VERSION --host-pv-dir=/var/lib/boot2docker/ocp-pv
+
 
 if [ $? -ne 0 ]; then
 		echo
@@ -168,7 +169,7 @@ if [ $? -ne 0 ]; then
 		echo
 		echo "Using osX version of cluster up... installing second try OCP version: $OCP_VERSION"
 		echo
-		oc cluster up --docker-machine=openshift --image=registry.access.redhat.com/openshift3/ose --version=$OCP_VERSION
+    oc cluster up --image=registry.access.redhat.com/openshift3/ose --host-data-dir=/var/lib/boot2docker/ocp-data --docker-machine=openshift --host-config-dir=/var/lib/boot2docker/ocp-config --use-existing-config=true --version=$OCP_VERSION --host-pv-dir=/var/lib/boot2docker/ocp-pv
 
 		if [ $? -ne 0 ]; then
 				echo
@@ -349,6 +350,10 @@ echo "=  Now get your Red Hat Demo Central example       ="
 echo "=  projects here:                                  ="
 echo "=                                                  ="
 echo "=     https://github.com/redhatdemocentral         ="
+echo "=                                                  ="
+echo "=  To stop and restart your OCP cluster with       ="
+echo "=  installed containers, see Readme.md in the      ="
+echo "=  NOTES section for details.                      ="
 echo "=                                                  ="
 echo "=  When finished, clean up your demo with:         ="
 echo "=                                                  ="

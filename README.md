@@ -38,7 +38,24 @@ Log in to the OCP console with:
    Admin pass: admin
    ```
 
-If you recieve the following error, on Linux:
+Persisitence is enabled, so to shutdown and restart the openshift cluster with your projects in place DO NOT
+run 'docker-machine rm -f openshift' or use init.sh / init.bat, instead:
+
+   ```
+   # shutdown using:
+   #
+   $ oc cluster down --docker-machine=openshift
+   $ docker-machine stop openshift
+
+   # restart use the existing data and configuration:
+   #
+   $ docker-machine start openshift
+   $ oc cluster up --image=registry.access.redhat.com/openshift3/ose --host-data-dir=/var/lib/boot2docker/ocp-data  \
+        --docker-machine=openshift --host-config-dir=/var/lib/boot2docker/ocp-config --use-existing-config=true     \
+        --host-pv-dir=/var/lib/boot2docker/ocp-pv
+   ```
+
+Linux errors? If you recieve the following error, on Linux:
 
    ```
    Error: did not detect an --insecure-registry argument on the Docker daemon
@@ -75,6 +92,8 @@ Supporting Articles
 Released versions
 -----------------
 See the tagged releases for the following versions of the product:
+
+- v1.7 - OpenShift Container Platform v3.5 based on OpenShift command line tools v3.5.5.5 with persistence enabled for restarts.
 
 - v1.6 - OpenShift Container Platform v3.5 based on OpenShift command line tools v3.5.5.5.
 
