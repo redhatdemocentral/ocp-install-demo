@@ -109,6 +109,8 @@ See the tagged releases for the following versions of the product:
 
 - v1.0 - OpenShift Container Platform v3.3 based on OpenShift command line tools v3.3.1.3.
 
+(![OCP Video](https://github.com/redhatdemocentral/ocp-install-demo/blob/master/docs/demo-images/ocp-install-video.png?raw=true)https://youtu.be/Rj0We91ec9Y)
+
 ![OCP Login](https://github.com/redhatdemocentral/ocp-install-demo/blob/master/docs/demo-images/ocp-login.png?raw=true)
 
 ![Cloud Suite](https://github.com/redhatdemocentral/ocp-install-demo/blob/master/docs/demo-images/rhcs-arch.png?raw=true)
