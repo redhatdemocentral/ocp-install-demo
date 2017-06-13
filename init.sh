@@ -9,12 +9,7 @@ OCP_VERSION="$OC_MAJOR_VER.$OC_MINOR_VER"
 
 # sets RAM usage limit for OCP.
 VM_MEMORY=12288
-
-if [ `uname` == 'Linux' ]; then
-		virt_driver='kvm'
-else
-		virt_driver='virtualbox'
-fi
+VIRT_DRIVER="virtualbox"
 
 # wipe screen.
 clear 
@@ -54,6 +49,7 @@ if [ `uname` == 'Darwin' ]; then
 		echo "VirtualBox is installed..."
 		echo
 elif [ `uname` == 'Linux' ]; then
+		VIRT_DRIVER='kvm'
     echo "You are running on Linux."
     echo "This script assumes you are going to use KVM on Linux."
     echo "You'll need to install docker-machine and docker-machine-driver-kvm in your \$PATH manually."
@@ -83,7 +79,9 @@ if [ `uname` == 'Darwin' ]; then
 		exit
 	fi
 else
-	# for Linux versions; at least on Fedora, docker needs root permissions
+	# For some Linux versions, docker needs root permissions.
+	echo "Checking the docker version on Linux requires 'sudo', please provide the password..."
+	echo
 	sudo docker ps >/dev/null 2>&1
 
 	if [ $? -ne 0 ]; then
@@ -111,10 +109,11 @@ if [ `uname` == 'Darwin' ]; then
 			exit
 		fi
 elif [ `uname` == 'Linux' ]; then
-		echo "This demo has been tested with docker 1.12 as shipped with Fedora."
-		echo "As various distro's ship with different versions of docker, not all available docker versions have been tested."
-		echo "As such, the demo probably works with other versions of docker installed locally, but ymmv."
-        echo
+		echo "This demo has been tested with docker 1.12+ on several Linux distro's, as various distro's"
+		echo "ship with different versions of docker, not all available docker versions have been tested."
+		echo "As such, the demo probably works with other versions of docker installed locally, but you run"
+		echo "them at your own risk."
+    echo
 fi
 
 # Ensure OpenShift command line tools available.
@@ -147,7 +146,7 @@ fi
 
 echo "Setting up OpenShift docker machine..."
 echo
-docker-machine create --driver ${virt_driver} --${virt_driver}-cpu-count "2" --${virt_driver}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16  --${virt_driver}-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
+docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16  --${VIRT_DRIVER}-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
 
 if [ $? -ne 0 ]; then
 		echo
@@ -159,7 +158,7 @@ if [ $? -ne 0 ]; then
 
 		echo "Setting up new OpenShift docker machine..."
     echo
-    docker-machine create --driver ${virt_driver} --${virt_driver}-cpu-count "2" --${virt_driver}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${virt_driver}-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
+    docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
 
 		if [ $? -ne 0 ]; then
 				echo
@@ -186,7 +185,7 @@ if [ $? -ne 0 ]; then
 
     echo "Setting up new OpenShift docker machine..."
     echo
-    docker-machine create --driver ${virt_driver} --${virt_driver}-cpu-count "2" --${virt_driver}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${virt_driver}-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
+    docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
 
 		echo
 		echo "Trying again to install OCP with cluster up..."
@@ -204,7 +203,6 @@ if [ $? -ne 0 ]; then
 				exit
 		fi
 fi
-
 
 echo
 echo "Logging in as admin user..."
