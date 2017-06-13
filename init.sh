@@ -8,7 +8,8 @@ OC_MINI_VER=5
 OCP_VERSION="$OC_MAJOR_VER.$OC_MINOR_VER"
 
 # sets RAM usage limit for OCP.
-VBOX_MEMORY=12288
+VM_MEMORY=12288
+VIRT_DRIVER="virtualbox"
 
 # wipe screen.
 clear 
@@ -47,13 +48,25 @@ if [ `uname` == 'Darwin' ]; then
 		command -v VirtualBox -h >/dev/null 2>&1 || { echo >&2 "VirtualBox is required but not installed yet... download here: https://www.virtualbox.org/wiki/Downloads"; exit 1; }
 		echo "VirtualBox is installed..."
 		echo
+elif [ `uname` == 'Linux' ]; then
+		VIRT_DRIVER='kvm'
+    echo "You are running on Linux."
+    echo "This script assumes you are going to use KVM on Linux."
+    echo "You'll need to install docker-machine and docker-machine-driver-kvm in your \$PATH manually."
+    echo "Download them from https://github.com/docker/machine/releases and https://github.com/dhiltgen/docker-machine-kvm/releases, respectively."
 fi
 
 # Ensure docker engine available.
 #
-command -v docker -h  >/dev/null 2>&1 || { echo >&2 "Docker is required but not installed yet... download here: https://store.docker.com/search?offering=community&type=edition"; exit 1; }
-echo "Docker is installed... checking for valid version..."
-echo
+if [ `uname` == 'Darwin' ]; then
+		command -v docker -h  >/dev/null 2>&1 || { echo >&2 "Docker is required but not installed yet... download here: https://store.docker.com/search?offering=community&type=edition"; exit 1; }
+		echo "Docker is installed... checking for valid version..."
+		echo
+elif [ `uname` == 'Linux' ]; then
+		command -v docker -h  >/dev/null 2>&1 || { echo >&2 "Docker is required but not installed yet... download here: https://store.docker.com/search?offering=community&type=edition or install through your distro's package manager"; exit 1; }
+		echo "Docker is installed... checking for valid version..."
+		echo
+fi
 
 # Check that docker deamon is setup correctly.
 if [ `uname` == 'Darwin' ]; then
@@ -66,8 +79,10 @@ if [ `uname` == 'Darwin' ]; then
 		exit
 	fi
 else
-	# for Linux versions.
-	docker ps >/dev/null 2>&1
+	# For some Linux versions, docker needs root permissions.
+	echo "Checking the docker version on Linux requires 'sudo', please provide the password..."
+	echo
+	sudo docker ps >/dev/null 2>&1
 
 	if [ $? -ne 0 ]; then
 		echo "Docker deamon is not running... or is running insecurely..."
@@ -82,15 +97,23 @@ echo "Verified the Docker deamon is running..."
 echo
 
 # Check docker enging version.
-dockerverone=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $1}')
-dockervertwo=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $2}')
-if [ $dockerverone -eq $DOCKER_MAJOR_VER ] && [ $dockervertwo -ge $DOCKER_MINOR_VER ]; then
-	echo "Valid version of docker engine found... $dockerverone.$dockervertwo"
-	echo
-else
-	echo "Docker engine version $dockerverone.$dockervertwo found... need $DOCKER_MAJOR_VER.$DOCKER_MINOR_VER or higher, please install: https://store.docker.com/search?offering=community&type=edition"
-	echo
-	exit
+if [ `uname` == 'Darwin' ]; then
+		dockerverone=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $1}')
+		dockervertwo=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $2}')
+		if [ $dockerverone -eq $DOCKER_MAJOR_VER ] && [ $dockervertwo -ge $DOCKER_MINOR_VER ]; then
+			echo "Valid version of docker engine found... $dockerverone.$dockervertwo"
+			echo
+		else
+			echo "Docker engine version $dockerverone.$dockervertwo found... need $DOCKER_MAJOR_VER.$DOCKER_MINOR_VER or higher, please install: https://store.docker.com/search?offering=community&type=edition"
+			echo
+			exit
+		fi
+elif [ `uname` == 'Linux' ]; then
+		echo "This demo has been tested with docker 1.12+ on several Linux distro's, as various distro's"
+		echo "ship with different versions of docker, not all available docker versions have been tested."
+		echo "As such, the demo probably works with other versions of docker installed locally, but you run"
+		echo "them at your own risk."
+    echo
 fi
 
 # Ensure OpenShift command line tools available.
@@ -123,7 +146,7 @@ fi
 
 echo "Setting up OpenShift docker machine..."
 echo
-docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "$VBOX_MEMORY" --engine-insecure-registry 172.30.0.0/16  --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
+docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16  --${VIRT_DRIVER}-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
 
 if [ $? -ne 0 ]; then
 		echo
@@ -135,7 +158,7 @@ if [ $? -ne 0 ]; then
 
 		echo "Setting up new OpenShift docker machine..."
     echo
-    docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "$VBOX_MEMORY" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
+    docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
 
 		if [ $? -ne 0 ]; then
 				echo
@@ -162,7 +185,7 @@ if [ $? -ne 0 ]; then
 
     echo "Setting up new OpenShift docker machine..."
     echo
-    docker-machine create --driver virtualbox --virtualbox-cpu-count "2" --virtualbox-memory "$VBOX_MEMORY" --engine-insecure-registry 172.30.0.0/16 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
+    docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
 
 		echo
 		echo "Trying again to install OCP with cluster up..."
@@ -180,7 +203,6 @@ if [ $? -ne 0 ]; then
 				exit
 		fi
 fi
-
 
 echo
 echo "Logging in as admin user..."
