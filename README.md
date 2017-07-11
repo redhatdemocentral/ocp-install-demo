@@ -26,7 +26,7 @@ Install on your machine
 3. Follow displayed instructions to log in to your brand new OpenShift Container Platform!
 
 4. Still want more help installing? Try <a href="https://appdevcloudworkshop.github.io/lab01.html" target="_blank">these 
-instructions (part of an online workshop) that explain the installation in detail.
+instructions (part of an online workshop)</a> that explain the installation in detail.
 
 
 Notes
