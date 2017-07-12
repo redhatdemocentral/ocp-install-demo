@@ -44,6 +44,8 @@ Log in to the OCP console with:
    Admin pass: admin
    ```
 
+------
+
 Persisitence is enabled, so to shutdown and restart the openshift cluster with your projects in place DO NOT
 run 'docker-machine rm -f openshift' or use init.sh / init.bat, instead:
 
@@ -60,6 +62,10 @@ run 'docker-machine rm -f openshift' or use init.sh / init.bat, instead:
         --docker-machine=openshift --host-config-dir=/var/lib/boot2docker/ocp-config --use-existing-config=true     \
         --host-pv-dir=/var/lib/boot2docker/ocp-pv
    ```
+
+You can find these commands for unix based machines in the directory support/{ocp-stop.sh|ocp-restart.sh}.
+
+-----
 
 Linux errors? If you recieve the following error, on Linux:
 
