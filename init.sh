@@ -6,10 +6,12 @@ OC_MAJOR_VER="v3"
 OC_MINOR_VER=5
 OC_MINI_VER=5
 OCP_VERSION="$OC_MAJOR_VER.$OC_MINOR_VER"
-
-# sets RAM usage limit for OCP.
-VM_MEMORY=12288
 VIRT_DRIVER="virtualbox"
+
+# uncomment amount memory needed, sets RAM usage limit for OCP, default 12 GB.
+VM_MEMORY=12288   # 12GB
+#VM_MEMORY=6144     # 6GB
+#VM_MEMORY=3072     # 3GB
 
 # wipe screen.
 clear 
