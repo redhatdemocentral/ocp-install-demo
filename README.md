@@ -84,8 +84,12 @@ Then ensure that the Docker daemon is running with the following argument by:
    INSECURE_REGISTRY='--insecure-registry 172.30.0.0/16'
    ```
 
+-----
+
 This project has an install script that is setup to allow you to re-run it without worrying about previous
 installations. If you re-run it, it removes old 'openshift' machines and reinstalls for you. 
+
+-----
 
 
 Supporting Articles
