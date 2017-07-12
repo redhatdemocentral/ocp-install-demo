@@ -34,6 +34,8 @@ Notes
 Installation reserves default of 12 GB memory on your machine for OCP, see comments at top of init scripts to adjust variable 
 used to limit memory usage based on your needs.
 
+-----
+
 Log in to the OCP console with:
    
    ```
