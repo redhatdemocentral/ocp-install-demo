@@ -3,14 +3,15 @@
 DOCKER_MAJOR_VER=17
 DOCKER_MINOR_VER=03
 OC_MAJOR_VER="v3"
-OC_MINOR_VER=5
-OC_MINI_VER=5
+OC_MINOR_VER=6
+OC_MINI_VER=173
 OCP_VERSION="$OC_MAJOR_VER.$OC_MINOR_VER"
 VIRT_DRIVER="virtualbox"
 
 # uncomment amount memory needed, sets RAM usage limit for OCP, default 12 GB.
-#VM_MEMORY=12288   # 12GB
-VM_MEMORY=6144     # 6GB
+#VM_MEMORY=12288    # 12GB
+VM_MEMORY=10240    # 10GB
+#VM_MEMORY=6144     # 6GB
 #VM_MEMORY=3072     # 3GB
 
 # wipe screen.
@@ -120,7 +121,7 @@ fi
 
 # Ensure OpenShift command line tools available.
 #
-command -v oc help >/dev/null 2>&1 || { echo >&2 "OpenShift CLI tooling is required but not installed yet... download here: https://drive.google.com/open?id=0B9WSViV5BZ4aVXV5U3F4LVVmWVk"; exit 1; }
+command -v oc help >/dev/null 2>&1 || { echo >&2 "OpenShift CLI tooling is required but not installed yet... download $OCP_VERSION here: https://access.redhat.com/downloads/content/290"; exit 1; }
 echo "OpenShift command line tools installed... checking for valid version..."
 echo
 
@@ -138,10 +139,10 @@ else
 	echo "Version of installed OpenShift command line tools is $verone.$vertwo.$verthree, must be $OC_MAJOR_VER.$OC_MINOR_VER.$OC_MINI_VER..."
 	echo
 	if [ `uname` == 'Darwin' ]; then
-		echo "Download for Mac here: https://drive.google.com/open?id=0B9WSViV5BZ4aVXV5U3F4LVVmWVk"
+		echo "Download for Mac here: https://access.redhat.com/downloads/content/290"
 		exit
 	else
-		echo "Download for Linux here: https://drive.google.com/open?id=0B9WSViV5BZ4aVXV5U3F4LVVmWVk"
+		echo "Download for Linux here: https://access.redhat.com/downloads/content/290/"
 		exit
 	fi
 fi

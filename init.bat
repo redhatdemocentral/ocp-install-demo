@@ -5,12 +5,13 @@ set PROJECT_HOME=%~dp0
 set DOCKER_MAJOR_VER=17
 set DOCKER_MINOR_VER=03
 set OC_MAJOR_VER=v3
-set OC_MINOR_VER=5
-set OC_MINI_VER=5
+set OC_MINOR_VER=6
+set OC_MINI_VER=173
 set OCP_VERSION=%OC_MAJOR_VER%.%OC_MINOR_VER%
 
 REM uncomment amount memory needed, sets RAM usage limit for OCP, default 12 GB.
 set VBOX_MEMORY=12288
+REM set VM_MEMORY=10240
 REM set VM_MEMORY=6144 
 REM set VM_MEMORY=3072   
 
@@ -107,7 +108,7 @@ REM Ensure OpenShift command line tools available.
 call oc help >nul 2>&1
 
 if %ERRORLEVEL% NEQ 0 (
-  echo OpenShift CLI tooling is required but not installed yet... download here: https://drive.google.com/open?id=0B9WSViV5BZ4aVXV5U3F4LVVmWVk
+  echo OpenShift CLI tooling is required but not installed yet... download %OCP_VERSION% here: https://access.redhat.com/downloads/content/290
   GOTO :EOF
 ) else (
   echo OpenShift command line tools installed... checking for valid version...
@@ -134,7 +135,7 @@ if %OC_MAJOR_VER% EQU %verone% if %OC_MINOR_VER% EQU %vertwo% if %OC_MINI_VER% E
 
 echo Version of installed OpenShift command line tools is %verone%.%vertwo%.%verthree%, must be %OC_MAJOR_VER%.%OC_MINOR_VER%.%OC_MINI_VER%...
 echo.
-echo Download for Windows here: https://drive.google.com/open?id=0B9WSViV5BZ4aVXV5U3F4LVVmWVk
+echo Download for Windows here: https://access.redhat.com/downloads/content/290
 GOTO :EOF
 
 :passOcTestContinue

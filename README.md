@@ -13,7 +13,7 @@ listed here and the install provides pointers to downloads if missing:
    ```
    1. VirtualBox for Windows and OSX
    2. Docker engine version 17.03
-   3. OpenShift Client (oc) v3.5.5.5
+   3. OpenShift Client (oc) v3.6.173
    ```
 
 
@@ -116,6 +116,8 @@ Supporting Articles
 Released versions
 -----------------
 See the tagged releases for the following versions of the product:
+
+- v1.8 - OpenShift Container Platform v3.6 based on OpenShift command line tools v3.6.173 with persistence enabled for restarts.
 
 - v1.7 - OpenShift Container Platform v3.5 based on OpenShift command line tools v3.5.5.5 with persistence enabled for restarts.
 
