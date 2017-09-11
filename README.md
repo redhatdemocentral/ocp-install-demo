@@ -13,7 +13,7 @@ listed here and the install provides pointers to downloads if missing:
    ```
    1. VirtualBox for Windows and OSX
    2. Docker engine version 17.06
-   3. OpenShift Client (oc) v3.6.173
+   3. OpenShift Client (oc) v3.6.173.0.21
    ```
 
 
