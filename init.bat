@@ -191,6 +191,18 @@ for /f "delims=" %%i in ('oc status ^| findstr -i -c:"My Project"') do (
   )
 )
 
+echo "Granting admin user full cluster-admin rights..."
+echo.
+call oc adm policy add-cluster-role-to-user cluster-admin admin
+
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem granting admin user full cluster-admin rights.
+	echo.
+	GOTO :EOF
+)
+
+echo.
 echo Updating JBoss image streams...
 echo.
 call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json

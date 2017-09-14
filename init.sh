@@ -222,6 +222,18 @@ echo
 # set console environment to openshift container.
 eval "$(docker-machine env openshift)"
 
+echo "Granting admin user full cluster-admin rights..."
+echo
+oc adm policy add-cluster-role-to-user cluster-admin admin
+
+if [ $? -ne 0 ]; then
+	echo
+	echo "Problem granting admin user full cluster-admin rights!"
+	echo
+	exit
+fi
+
+echo
 echo "Updating JBoss image streams..."
 echo
 oc create -n openshift -f 'https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json'
