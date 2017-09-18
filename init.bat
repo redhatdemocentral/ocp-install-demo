@@ -205,7 +205,7 @@ if %ERRORLEVEL% NEQ 0 (
 echo.
 echo Updating JBoss image streams...
 echo.
-call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json
+call oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-streams/jboss-image-streams.json
 
 if %ERRORLEVEL% NEQ 0 (
 	echo.
@@ -213,7 +213,7 @@ if %ERRORLEVEL% NEQ 0 (
 	echo.
   echo Trying again.
 	echo.
-  call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json
+  call oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-streams/jboss-image-streams.json
 	
 	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
@@ -226,7 +226,7 @@ if %ERRORLEVEL% NEQ 0 (
 echo.
 echo Updating Fuse image streams...
 echo.
-call oc create -n openshift -f https://raw.githubusercontent.com/jboss-fuse/application-templates/master/fis-image-streams.json
+call oc create -n openshift -f ttps://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-streams/fis-image-streams.json
 
 if %ERRORLEVEL% NEQ 0 (
 	echo.
@@ -234,7 +234,7 @@ if %ERRORLEVEL% NEQ 0 (
 	echo.
   echo Trying again.
 	echo.
-  call oc create -n openshift -f https://raw.githubusercontent.com/jboss-fuse/application-templates/master/fis-image-streams.json
+  call oc create -n openshift -f ttps://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-streams/fis-image-streams.json
 	
 	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
@@ -247,7 +247,7 @@ if %ERRORLEVEL% NEQ 0 (
 echo.
 echo Updating EAP templates...
 echo.
-call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/eap/eap70-basic-s2i.json
+call oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/eap70-basic-s2i.json
 
 if %ERRORLEVEL% NEQ 0 (
 	echo.
@@ -255,7 +255,7 @@ if %ERRORLEVEL% NEQ 0 (
 	echo.
   echo Trying again.
 	echo.
-  call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/eap/eap70-basic-s2i.json
+  call oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/eap70-basic-s2i.json
 	
 	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
@@ -268,7 +268,8 @@ if %ERRORLEVEL% NEQ 0 (
 echo. 
 echo Updating Decision Server templates...
 echo.
-call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/decisionserver/decisionserver63-basic-s2i.json
+call oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/decisionserver63-basic-s2i.json
+call oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/decisionserver64-basic-s2i.json
 
 if %ERRORLEVEL% NEQ 0 (
 	echo.
@@ -276,7 +277,8 @@ if %ERRORLEVEL% NEQ 0 (
 	echo.
   echo Trying again.
 	echo.
-  call oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/decisionserver/decisionserver63-basic-s2i.json
+  call oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/decisionserver63-basic-s2i.json
+  call oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/decisionserver64-basic-s2i.json
 	
 	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
@@ -313,7 +315,7 @@ if %ERRORLEVEL% NEQ 0 (
 echo.
 echo Update .Net image streams...
 echo.
-call oc create -n openshift -f https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams.json
+call oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/image-streams/dotnet_imagestreams.json
 
 if %ERRORLEVEL% NEQ 0 (
 	echo.
@@ -321,7 +323,7 @@ if %ERRORLEVEL% NEQ 0 (
 	echo.
   echo Trying again.
 	echo.
-  call oc create -n openshift -f https://raw.githubusercontent.com/redhat-developer/s2i-dotnetcore/master/dotnet_imagestreams.json
+  call oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/image-streams/dotnet_imagestreams.json
 	
 	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
