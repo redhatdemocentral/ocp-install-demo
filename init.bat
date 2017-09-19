@@ -9,10 +9,9 @@ set OC_MINOR_VER=6
 set OC_MINI_VER=173
 set OCP_VERSION=%OC_MAJOR_VER%.%OC_MINOR_VER%
 
-REM uncomment amount memory needed, sets RAM usage limit for OCP, default 12 GB.
-set VBOX_MEMORY=12288
+REM uncomment amount memory needed, sets RAM usage limit for OCP, default 6 GB.
 REM set VM_MEMORY=10240
-REM set VM_MEMORY=6144 
+set VM_MEMORY=6144 
 REM set VM_MEMORY=3072   
 
 REM wipe screen.

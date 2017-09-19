@@ -31,7 +31,7 @@ instructions (part of an online workshop)</a> that explain the installation in d
 
 Notes
 -----
-Installation reserves default of 12 GB memory on your machine for OCP, see comments at top of init scripts to adjust variable 
+Installation reserves default of 6 GB memory on your machine for OCP, see comments at top of init scripts to adjust variable 
 used to limit memory usage based on your needs.
 
 -----
