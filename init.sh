@@ -10,7 +10,8 @@ VIRT_DRIVER="virtualbox"
 
 # uncomment amount memory needed, sets RAM usage limit for OCP, default 6 GB.
 #VM_MEMORY=10240    # 10GB
-VM_MEMORY=6144     # 6GB
+VM_MEMORY=8192    # 8GB
+#VM_MEMORY=6144     # 6GB
 #VM_MEMORY=3072     # 3GB
 
 # wipe screen.
@@ -174,7 +175,7 @@ fi
 
 echo "Installing OCP with cluster up..."
 echo
-oc cluster up --image=registry.access.redhat.com/openshift3/ose --host-data-dir=/var/lib/boot2docker/ocp-data --docker-machine=openshift --host-config-dir=/var/lib/boot2docker/ocp-config --use-existing-config=true --version=$OCP_VERSION --host-pv-dir=/var/lib/boot2docker/ocp-pv
+oc cluster up --image=registry.access.redhat.com/openshift3/ose --host-data-dir=/var/lib/boot2docker/ocp-data --docker-machine=openshift --host-config-dir=/var/lib/boot2docker/ocp-config --use-existing-config=true --version=$OCP_VERSION --host-pv-dir=/var/lib/boot2docker/ocp-pv --service-catalog
 
 
 if [ $? -ne 0 ]; then
@@ -194,7 +195,7 @@ if [ $? -ne 0 ]; then
 		echo
 		echo "Using osX version of cluster up... installing second try OCP version: $OCP_VERSION"
 		echo
-    oc cluster up --image=registry.access.redhat.com/openshift3/ose --host-data-dir=/var/lib/boot2docker/ocp-data --docker-machine=openshift --host-config-dir=/var/lib/boot2docker/ocp-config --use-existing-config=true --version=$OCP_VERSION --host-pv-dir=/var/lib/boot2docker/ocp-pv
+    oc cluster up --image=registry.access.redhat.com/openshift3/ose --host-data-dir=/var/lib/boot2docker/ocp-data --docker-machine=openshift --host-config-dir=/var/lib/boot2docker/ocp-config --use-existing-config=true --version=$OCP_VERSION --host-pv-dir=/var/lib/boot2docker/ocp-pv --service-catalog
 
 		if [ $? -ne 0 ]; then
 				echo
@@ -228,6 +229,18 @@ oc adm policy add-cluster-role-to-user cluster-admin admin
 if [ $? -ne 0 ]; then
 	echo
 	echo "Problem granting admin user full cluster-admin rights!"
+	echo
+	exit
+fi
+
+echo
+echo "Granting rights to service catalog access..."
+echo
+oc adm policy add-cluster-role-to-group system:openshift:templateservicebroker-client system:unauthenticated system:authenticated
+
+if [ $? -ne 0 ]; then
+	echo
+	echo "Problem granting service catalog rights!"
 	echo
 	exit
 fi

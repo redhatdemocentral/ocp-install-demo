@@ -168,7 +168,7 @@ if %ERRORLEVEL% NEQ 0 (
 echo Installing OCP with cluster up...
 echo.
 
-call oc cluster up --image=registry.access.redhat.com/openshift3/ose --host-data-dir=/var/lib/boot2docker/ocp-data  --docker-machine=openshift --host-config-dir=/var/lib/boot2docker/ocp-config --use-existing-config=true --host-pv-dir=/var/lib/boot2docker/ocp-pv
+call oc cluster up --image=registry.access.redhat.com/openshift3/ose --host-data-dir=/var/lib/boot2docker/ocp-data  --docker-machine=openshift --host-config-dir=/var/lib/boot2docker/ocp-config --use-existing-config=true --host-pv-dir=/var/lib/boot2docker/ocp-pv --service-catalog
 
 if %ERRORLEVEL% NEQ 0 (
   echo.
@@ -190,13 +190,25 @@ for /f "delims=" %%i in ('oc status ^| findstr -i -c:"My Project"') do (
   )
 )
 
-echo "Granting admin user full cluster-admin rights..."
+echo Granting admin user full cluster-admin rights...
 echo.
 call oc adm policy add-cluster-role-to-user cluster-admin admin
 
 if %ERRORLEVEL% NEQ 0 (
 	echo.
 	echo Problem granting admin user full cluster-admin rights.
+	echo.
+	GOTO :EOF
+)
+
+echo.
+echo Granting rights to service catalog access...
+echo.
+oc adm policy add-cluster-role-to-group system:openshift:templateservicebroker-client system:unauthenticated system:authenticated
+
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem granting service catalog rights.
 	echo.
 	GOTO :EOF
 )

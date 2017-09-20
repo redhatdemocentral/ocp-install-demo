@@ -31,7 +31,7 @@ instructions (part of an online workshop)</a> that explain the installation in d
 
 Notes
 -----
-Installation reserves default of 6 GB memory on your machine for OCP, see comments at top of init scripts to adjust variable 
+Installation reserves default of 8GB memory on your machine for OCP, see comments at top of init scripts to adjust variable 
 used to limit memory usage based on your needs.
 
 -----
@@ -118,6 +118,8 @@ Supporting Articles
 Released versions
 -----------------
 See the tagged releases for the following versions of the product:
+
+- v1.9 - OpenShift Container Platform v3.6 based on OpenShift command line tools v3.6.173 with tech preview service catalog enabled.
 
 - v1.8 - OpenShift Container Platform v3.6 based on OpenShift command line tools v3.6.173 with persistence enabled for restarts.
 
