@@ -237,7 +237,7 @@ if %ERRORLEVEL% NEQ 0 (
 echo.
 echo Updating Fuse image streams...
 echo.
-call oc create -n openshift -f ttps://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-streams/fis-image-streams.json
+call oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-streams/fis-image-streams.json
 
 if %ERRORLEVEL% NEQ 0 (
 	echo.
@@ -245,7 +245,7 @@ if %ERRORLEVEL% NEQ 0 (
 	echo.
   echo Trying again.
 	echo.
-  call oc create -n openshift -f ttps://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-streams/fis-image-streams.json
+  call oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-streams/fis-image-streams.json
 	
 	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
