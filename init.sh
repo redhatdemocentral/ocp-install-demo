@@ -96,7 +96,7 @@ else
 	fi
 fi
 
-echo "Verified the Docker deamon is running..."
+echo "Verified the Docker daemon is running..."
 echo
 
 # Check docker enging version.
