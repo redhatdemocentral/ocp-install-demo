@@ -69,7 +69,7 @@ You can find these commands for unix based machines in the directory support/{oc
 
 -----
 
-Linux errors? If you recieve the following error, on Linux:
+Network errors? If you recieve the following error, on Linux:
 
    ```
    Error: did not detect an --insecure-registry argument on the Docker daemon
@@ -82,6 +82,19 @@ Then ensure that the Docker daemon is running with the following argument by:
    # restart the docker service:
    #
    INSECURE_REGISTRY='--insecure-registry 172.30.0.0/16'
+   ```
+
+Or this network error on osX:
+
+   ```
+   Unable to connect to the server: net/http: TLS handshake timeout
+   ```
+
+Then add the this IP to the Docker Deamon insecure registry list:
+
+   ```
+   172.30.0.0/16
+
    ```
 
 -----
