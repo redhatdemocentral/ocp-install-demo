@@ -96,10 +96,10 @@ else
 	fi
 fi
 
-echo "Verified the Docker deamon is running..."
+echo "Verified the Docker daemon is running..."
 echo
 
-# Check docker enging version.
+# Check docker engine version.
 if [ `uname` == 'Darwin' ]; then
 		dockerverone=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $1}')
 		dockervertwo=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $2}')
