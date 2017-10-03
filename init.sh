@@ -7,6 +7,13 @@ OC_MINOR_VER=6
 OC_MINI_VER=173
 OCP_VERSION="$OC_MAJOR_VER.$OC_MINOR_VER"
 VIRT_DRIVER="virtualbox"
+STREAM_JBOSS="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-streams/jboss-image-streams.json"
+STREAM_FUSE="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-streams/fis-image-streams.json"
+STREAM_RHEL="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v1.4/image-streams/image-streams-rhel7.json"
+STREAM_DOTNET="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/image-streams/dotnet_imagestreams.json"
+TEMPLATE_EAP="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/eap70-basic-s2i.json"
+TEMPLATE_BRMS_63="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/decisionserver63-basic-s2i.json"
+TEMPLATE_BRMS_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/decisionserver64-basic-s2i.json"
 
 # uncomment amount memory needed, sets RAM usage limit for OCP, default 6 GB.
 #VM_MEMORY=10240    # 10GB
@@ -248,7 +255,8 @@ fi
 echo
 echo "Updating JBoss image streams..."
 echo
-oc create -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-streams/jboss-image-streams.json'
+oc delete -n openshift -f $STREAM_JBOSS >/dev/null 2>&1
+oc create -n openshift -f $STREAM_JBOSS
 
 if [ $? -ne 0 ]; then
 	echo
@@ -257,7 +265,8 @@ if [ $? -ne 0 ]; then
   echo "Trying again..."
 	echo
 	sleep 10
-  oc create -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-streams/jboss-image-streams.json'
+  oc delete -n openshift -f $STREAM_JBOSS >/dev/null 2>&1
+  oc create -n openshift -f $STREAM_JBOSS
 	
 	if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
@@ -270,7 +279,8 @@ fi
 echo
 echo "Updating Fuse image streams..."
 echo
-oc create -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-streams/fis-image-streams.json'
+oc delete -n openshift -f $STREAM_FUSE >/dev/null 2>&1
+oc create -n openshift -f $STREAM_FUSE
 
 if [ $? -ne 0 ]; then
 	echo
@@ -279,7 +289,8 @@ if [ $? -ne 0 ]; then
   echo "Trying again..."
 	echo
 	sleep 10
-  oc create -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-streams/fis-image-streams.json'
+  oc delete -n openshift -f $STREAM_FUSE >/dev/null 2>&1
+  oc create -n openshift -f $STREAM_FUSE
 	
 	if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
@@ -292,7 +303,8 @@ fi
 echo
 echo "Updating EAP templates..."
 echo
-oc create -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/eap70-basic-s2i.json'
+oc delete -n openshift -f $TEMPLATE_EAP >/dev/null 2>&1
+oc create -n openshift -f $TEMPLATE_EAP
 
 if [ $? -ne 0 ]; then
 	echo
@@ -301,7 +313,8 @@ if [ $? -ne 0 ]; then
   echo "Trying again..."
 	echo
 	sleep 10
-   oc create -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/eap70-basic-s2i.json'
+	oc delete -n openshift -f $TEMPLATE_EAP >/dev/null 2>&1
+  oc create -n openshift -f $TEMPLATE_EAP
 	
 	if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
@@ -314,8 +327,10 @@ fi
 echo
 echo "Updating Decision Server templates..."
 echo
-oc create -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/decisionserver63-basic-s2i.json'
-oc create -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/decisionserver64-basic-s2i.json'
+oc delete -n openshift -f $TEMPLATE_BRMS_63 >/dev/null 2>&1
+oc delete -n openshift -f $TEMPLATE_BRMS_64 >/dev/null 2>&1
+oc create -n openshift -f $TEMPLATE_BRMS_63
+oc create -n openshift -f $TEMPLATE_BRMS_64
 
 if [ $? -ne 0 ]; then
 	echo
@@ -324,8 +339,10 @@ if [ $? -ne 0 ]; then
   echo "Trying again..."
 	echo
 	sleep 10
-  oc create -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/decisionserver63-basic-s2i.json'
-  oc create -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/decisionserver64-basic-s2i.json'
+  oc delete -n openshift -f $TEMPLATE_BRMS_63 >/dev/null 2>&1
+  oc delete -n openshift -f $TEMPLATE_BRMS_64 >/dev/null 2>&1
+  oc create -n openshift -f $TEMPLATE_BRMS_63
+  oc create -n openshift -f $TEMPLATE_BRMS_64
 	
 	if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
@@ -338,8 +355,8 @@ fi
 echo
 echo "Updating RHEL 7 image streams..."
 echo
-oc delete -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v1.4/image-streams/image-streams-rhel7.json'
-oc create -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v1.4/image-streams/image-streams-rhel7.json'
+oc delete -n openshift -f $STREAM_RHEL >/dev/null 2>&1
+oc create -n openshift -f $STREAM_RHEL
 
 if [ $? -ne 0 ]; then
 	echo
@@ -348,8 +365,8 @@ if [ $? -ne 0 ]; then
   echo "Trying again..."
 	echo
 	sleep 10
-  oc delete -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v1.4/image-streams/image-streams-rhel7.json'
-  oc create -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v1.4/image-streams/image-streams-rhel7.json'
+  oc delete -n openshift -f $STREAM_RHEL >/dev/null 2>&1
+  oc create -n openshift -f $STREAM_RHEL
 	
 	if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
@@ -362,7 +379,8 @@ fi
 echo
 echo "Update .Net image streams..."
 echo
-oc create -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/image-streams/dotnet_imagestreams.json'
+oc delete -n openshift -f $STREAM_DOTNET >/dev/null 2>&1
+oc create -n openshift -f $STREAM_DOTNET
 
 if [ $? -ne 0 ]; then
 	echo
@@ -371,7 +389,8 @@ if [ $? -ne 0 ]; then
   echo "Trying again..."
 	echo
 	sleep 10
-  oc create -n openshift -f 'https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/image-streams/dotnet_imagestreams.json'
+  oc delete -n openshift -f $STREAM_DOTNET >/dev/null 2>&1
+  oc create -n openshift -f $STREAM_DOTNET
 	
 	if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
