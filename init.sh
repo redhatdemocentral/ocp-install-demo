@@ -6,6 +6,8 @@ OC_MAJOR_VER="v3"
 OC_MINOR_VER=6
 OC_MINI_VER=173
 OCP_VERSION="$OC_MAJOR_VER.$OC_MINOR_VER"
+ISO_URL="https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso"
+ISO_CACHE="file://$HOME/.docker/machine/cache/boot2docker.iso"
 VIRT_DRIVER="virtualbox"
 STREAM_JBOSS="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-streams/jboss-image-streams.json"
 STREAM_FUSE="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-streams/fis-image-streams.json"
@@ -156,7 +158,7 @@ fi
 
 echo "Setting up OpenShift docker machine..."
 echo
-docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16  --${VIRT_DRIVER}-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
+docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_CACHE openshift 
 
 if [ $? -ne 0 ]; then
 		echo
@@ -168,7 +170,7 @@ if [ $? -ne 0 ]; then
 
 		echo "Setting up new OpenShift docker machine..."
     echo
-    docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
+    docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_URL openshift 
 
 		if [ $? -ne 0 ]; then
 				echo
@@ -195,7 +197,7 @@ if [ $? -ne 0 ]; then
 
     echo "Setting up new OpenShift docker machine..."
     echo
-    docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso openshift 
+    docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url="$ISO_URL" openshift 
 
 		echo
 		echo "Trying again to install OCP with cluster up..."
