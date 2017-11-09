@@ -12,8 +12,11 @@ listed here and the install provides pointers to downloads if missing:
 
    ```
    1. VirtualBox for Windows and OSX
-   2. Docker engine version 17.06
-   3. OpenShift Client (oc) v3.6.173.0.21
+   2. Hyper-V for Windows 10 (Windows Feature Install)
+      a. Important - Use Hyper-V Manager to create "ocpNET" Virtual Switch. (name is used in script)
+      b. Important - Set "ocpNET" to External Network physical/wireless interface (with DHCP) - Must have Internet.
+   3. Docker engine version 17.06
+   4. OpenShift Client (oc) v3.6.173.0.21
    ```
 
 
@@ -21,7 +24,7 @@ Install on your machine
 -----------------------
 1. [Download and unzip.](https://github.com/redhatdemocentral/ocp-install-demo/archive/master.zip)
 
-2. Run 'init.sh' or 'init.bat' file, then sit back. (Note: 'init.bat' must be run with Administrative privileges.)
+2. Run 'init.sh', 'init.bat' or 'init-win10.bat' file, then sit back. (Note: 'init.bat' and 'init-win10.bat' must be run with Administrative privileges.)
 
 3. Follow displayed instructions to log in to your brand new OpenShift Container Platform!
 
@@ -131,6 +134,8 @@ Supporting Articles
 Released versions
 -----------------
 See the tagged releases for the following versions of the product:
+
+- v2.0 - OpenShift Container Platform v3.6 based on OpenShift command line tools v3.6.173 with Hyper-V Windows installation.
 
 - v1.9 - OpenShift Container Platform v3.6 based on OpenShift command line tools v3.6.173 with tech preview service catalog enabled.
 
