@@ -16,7 +16,7 @@ listed here and the install provides pointers to downloads if missing:
       a. Important - Use Hyper-V Manager to create "ocpNET" Virtual Switch. (name is used in script)
       b. Important - Set "ocpNET" to External Network physical/wireless interface (with DHCP) - Must have Internet.
    3. Docker engine version 17.06
-   4. OpenShift Client (oc) v3.6.173.0.21
+   4. OpenShift Client (oc) v3.7.9
    ```
 
 
@@ -140,6 +140,8 @@ Supporting Articles
 Released versions
 -----------------
 See the tagged releases for the following versions of the product:
+
+- v2.1 - OpenShift Container Platform v3.7 based on OpenShift command line tools v3.7.9.
 
 - v2.0 - OpenShift Container Platform v3.6 based on OpenShift command line tools v3.6.173 with Hyper-V Windows installation.
 
