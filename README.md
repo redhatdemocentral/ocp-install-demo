@@ -16,7 +16,8 @@ listed here and the install provides pointers to downloads if missing:
       a. Important - Use Hyper-V Manager to create "ocpNET" Virtual Switch. (name is used in script)
       b. Important - Set "ocpNET" to External Network physical/wireless interface (with DHCP) - Must have Internet.
    3. Xhyve for OSX from 'brew install xhyve' 
-   4. OpenShift Client (oc) v3.7.9
+   4. KVM for Linux
+   5. OpenShift Client (oc) v3.7.9
    ```
 
 
