@@ -8,7 +8,8 @@ OC_MINI_VER=9
 OCP_VERSION="$OC_MAJOR_VER.$OC_MINOR_VER"
 ISO_URL="https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso"
 ISO_CACHE="file://$HOME/.docker/machine/cache/boot2docker.iso"
-VIRT_DRIVER="virtualbox"
+VIRT_DRIVER="xhyve"
+VIRT_MEM="memory-size"
 STREAM_JBOSS="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.7/xpaas-streams/jboss-image-streams.json"
 STREAM_FUSE="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.7/xpaas-streams/fis-image-streams.json"
 STREAM_RHEL="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.7/image-streams/image-streams-rhel7.json"
@@ -19,8 +20,8 @@ TEMPLATE_BRMS_64="https://raw.githubusercontent.com/openshift/openshift-ansible/
 
 # uncomment amount memory needed, sets RAM usage limit for OCP, default 6 GB.
 #VM_MEMORY=10240    # 10GB
-VM_MEMORY=8192    # 8GB
-#VM_MEMORY=6144     # 6GB
+#VM_MEMORY=8192    # 8GB
+VM_MEMORY=6144     # 6GB
 #VM_MEMORY=3072     # 3GB
 
 # wipe screen.
@@ -57,75 +58,22 @@ echo
 # Ensure VirtualBox available.
 #
 if [ `uname` == 'Darwin' ]; then
-		command -v VirtualBox -h >/dev/null 2>&1 || { echo >&2 "VirtualBox is required but not installed yet... download here: https://www.virtualbox.org/wiki/Downloads"; exit 1; }
-		echo "VirtualBox is installed..."
+		command -v xhyve -v >/dev/null 2>&1 || { echo >&2 "OSX driver xhyve is required but not installed yet... use 'brew install xhyve' to install"; exit 1; }
+		echo "Xhyve is installed..."
 		echo
 elif [ `uname` == 'Linux' ]; then
 		VIRT_DRIVER='kvm'
+		VIRT_MEM='memory'
     echo "You are running on Linux."
     echo "This script assumes you are going to use KVM on Linux."
     echo "You'll need to install docker-machine and docker-machine-driver-kvm in your \$PATH manually."
     echo "Download them from https://github.com/docker/machine/releases and https://github.com/dhiltgen/docker-machine-kvm/releases, respectively."
-fi
-
-# Ensure docker engine available.
-#
-if [ `uname` == 'Darwin' ]; then
-		command -v docker -h  >/dev/null 2>&1 || { echo >&2 "Docker is required but not installed yet... download here: https://store.docker.com/search?offering=community&type=edition"; exit 1; }
-		echo "Docker is installed... checking for valid version..."
+elif [ `uname` == 'Darwin' ]; then
+	  VIRT_DRIVER='virtualbox'
+		VIRT_MEM='memory'
+		command -v VirtualBox -h >/dev/null 2>&1 || { echo >&2 "VirtualBox is required but not installed yet... download here: https://www.virtualbox.org/wiki/Downloads"; exit 1; }
+		echo "VirtualBox is installed..."
 		echo
-elif [ `uname` == 'Linux' ]; then
-		command -v docker -h  >/dev/null 2>&1 || { echo >&2 "Docker is required but not installed yet... download here: https://store.docker.com/search?offering=community&type=edition or install through your distro's package manager"; exit 1; }
-		echo "Docker is installed... checking for valid version..."
-		echo
-fi
-
-# Check that docker deamon is setup correctly.
-if [ `uname` == 'Darwin' ]; then
-	# for osX.
-	docker ps >/dev/null 2>&1
-
-	if [ $? -ne 0 ]; then
-		echo "Docker deamon is not running... please start Docker for osX..."
-		echo
-		exit
-	fi
-else
-	# For some Linux versions, docker needs root permissions.
-	echo "Checking the docker version on Linux requires 'sudo', please provide the password..."
-	echo
-	sudo docker ps >/dev/null 2>&1
-
-	if [ $? -ne 0 ]; then
-		echo "Docker deamon is not running... or is running insecurely..."
-		echo
-		echo "Check for instructions to run the docker deamon securely in NOTES section of this projects Readme.md file."
-		echo
-		exit
-	fi
-fi
-
-echo "Verified the Docker daemon is running..."
-echo
-
-# Check docker engine version.
-if [ `uname` == 'Darwin' ]; then
-		dockerverone=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $1}')
-		dockervertwo=$(docker version -f='{{ .Client.Version }}' | awk -F[=.] '{print $2}')
-		if [ $dockerverone -eq $DOCKER_MAJOR_VER ] && [ $dockervertwo -ge $DOCKER_MINOR_VER ]; then
-			echo "Valid version of docker engine found... $dockerverone.$dockervertwo"
-			echo
-		else
-			echo "Docker engine version $dockerverone.$dockervertwo found... need $DOCKER_MAJOR_VER.$DOCKER_MINOR_VER or higher, please install: https://store.docker.com/search?offering=community&type=edition"
-			echo
-			exit
-		fi
-elif [ `uname` == 'Linux' ]; then
-		echo "This demo has been tested with docker 1.12+ on several Linux distro's, as various distro's"
-		echo "ship with different versions of docker, not all available docker versions have been tested."
-		echo "As such, the demo probably works with other versions of docker installed locally, but you run"
-		echo "them at your own risk."
-    echo
 fi
 
 # Ensure OpenShift command line tools available.
@@ -156,9 +104,9 @@ else
 	fi
 fi
 
-echo "Setting up OpenShift docker machine..."
+echo "Setting up OpenShift docker machine using $VIRT_DRIVER..."
 echo
-docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_CACHE openshift 
+	docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-${VIRT_MEM} "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_CACHE openshift 
 
 if [ $? -ne 0 ]; then
 		echo
@@ -168,9 +116,9 @@ if [ $? -ne 0 ]; then
 		echo
 		docker-machine rm -f openshift
 
-		echo "Setting up new OpenShift docker machine..."
+    echo "Setting up OpenShift docker machine using $VIRT_DRIVER..."
     echo
-    docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_URL openshift 
+		docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-${VIRT_MEM} "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_CACHE openshift 
 
 		if [ $? -ne 0 ]; then
 				echo
@@ -195,9 +143,9 @@ if [ $? -ne 0 ]; then
 		echo
 		docker-machine rm -f openshift
 
-    echo "Setting up new OpenShift docker machine..."
+    echo "Setting up OpenShift docker machine using $VIRT_DRIVER..."
     echo
-    docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url="$ISO_URL" openshift 
+		docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-${VIRT_MEM} "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_CACHE openshift 
 
 		echo
 		echo "Trying again to install OCP with cluster up..."
@@ -410,7 +358,7 @@ echo "= Look for information at end of OCP install.      ="
 echo "=                                                  ="
 echo "=  The server is accessible via web console at:    ="
 echo "=                                                  ="
-echo "=	  $OCP_IP              ="
+echo "=	  $OCP_IP                ="
 echo "=                                                  ="
 echo "=  Log in as user: openshift-dev                   ="
 echo "=        password: devel                           ="

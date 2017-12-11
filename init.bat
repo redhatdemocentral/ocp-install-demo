@@ -52,64 +52,6 @@ echo ##                                                          ##
 echo ##############################################################
 echo.
 
-REM Ensure Docker is installed
-
-call where docker >nul 2>&1
-
-if %ERRORLEVEL% NEQ 0 (
-  echo Docker is required but not installed yet... download here: https://store.docker.com/search?offering=community&type=edition
-  GOTO :EOF
-) else (
-  echo Docker is installed... checking for valid version...
-)
-
-call docker ps >nul 2>&1
-
-if %ERRORLEVEL% NEQ 0 (
-  echo Docker deamon is not running... or is running insecurely...
-  echo.
-  echo Check for instructions to run the docker deamon securely see this projects Readme.md file.
-  echo.
-  echo.
-  GOTO :EOF
-)
-
-echo Verified the Docker deamon is running...
-echo.
-
-REM Check docker version
-for /f "delims=*" %%i in ('docker version ^| findstr -i Version') do (
-  for /F "tokens=2 delims= " %%A in ('echo %%i') do ( 
-    set dockerVerFull=%%A	
-  )
-  
-  GOTO :endDockerLoop
-)
-
-:endDockerLoop
-
-for /F "tokens=1,2,3 delims=." %%a in ('echo %dockerVerFull%') do (
-  set dockerverone=%%a
-  set dockervertwo=%%b
-  set dockerverthree=%%c
-)
-
-if %dockerverone% EQU %DOCKER_MAJOR_VER% if %dockervertwo% GEQ %DOCKER_MINOR_VER% ( 
-GOTO :passDockerTestContinue
-)
-
-REM Print Failure 
-echo Docker engine version %dockerverone%.%dockervertwo% found... need %DOCKER_MAJOR_VER%.%DOCKER_MINOR_VER% or higher, please update: https://store.docker.com/search?offering=community&type=edition
-echo
-GOTO :EOF
-
-
-
-:passDockerTestContinue
-
-echo Valid version of docker engine found... %dockerverone%.%dockervertwo%
-echo.
-
 REM Ensure OpenShift command line tools available.
 call oc help >nul 2>&1
 
@@ -392,3 +334,4 @@ echo =                                                  =
 echo =     $ docker-machine rm -f openshift             =
 echo =                                                  =
 echo ====================================================
+echo.
