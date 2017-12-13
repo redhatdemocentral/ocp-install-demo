@@ -20,8 +20,8 @@ TEMPLATE_BRMS_64="https://raw.githubusercontent.com/openshift/openshift-ansible/
 
 # uncomment amount memory needed, sets RAM usage limit for OCP, default 6 GB.
 #VM_MEMORY=10240    # 10GB
-#VM_MEMORY=8192    # 8GB
-VM_MEMORY=6144     # 6GB
+VM_MEMORY=8192    # 8GB
+#VM_MEMORY=6144     # 6GB
 #VM_MEMORY=3072     # 3GB
 
 # wipe screen.
@@ -106,7 +106,7 @@ fi
 
 echo "Setting up OpenShift docker machine using $VIRT_DRIVER..."
 echo
-	docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-${VIRT_MEM} "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_CACHE openshift 
+docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-${VIRT_MEM} "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_CACHE openshift 
 
 if [ $? -ne 0 ]; then
 		echo
@@ -118,7 +118,7 @@ if [ $? -ne 0 ]; then
 
     echo "Setting up OpenShift docker machine using $VIRT_DRIVER..."
     echo
-		docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-${VIRT_MEM} "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_CACHE openshift 
+		docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-${VIRT_MEM} "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_URL openshift 
 
 		if [ $? -ne 0 ]; then
 				echo
