@@ -18,9 +18,9 @@ TEMPLATE_BRMS_63="https://raw.githubusercontent.com/openshift/openshift-ansible/
 TEMPLATE_BRMS_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.7/xpaas-templates/decisionserver64-basic-s2i.json"
 
 # uncomment amount memory needed, sets RAM usage limit for OCP, default 6 GB.
-VM_MEMORY=10240    # 10GB
+#VM_MEMORY=10240    # 10GB
 #VM_MEMORY=8192    # 8GB
-#VM_MEMORY=6144     # 6GB
+VM_MEMORY=6144     # 6GB
 #VM_MEMORY=3072     # 3GB
 
 # wipe screen.
