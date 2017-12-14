@@ -8,8 +8,7 @@ OC_MINI_VER=9
 OCP_VERSION="$OC_MAJOR_VER.$OC_MINOR_VER"
 ISO_URL="https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso"
 ISO_CACHE="file://$HOME/.docker/machine/cache/boot2docker.iso"
-VIRT_DRIVER="xhyve"
-VIRT_MEM="memory-size"
+VIRT_DRIVER="virtualbox"
 STREAM_JBOSS="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.7/xpaas-streams/jboss-image-streams.json"
 STREAM_FUSE="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.7/xpaas-streams/fis-image-streams.json"
 STREAM_RHEL="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.7/image-streams/image-streams-rhel7.json"
@@ -19,8 +18,8 @@ TEMPLATE_BRMS_63="https://raw.githubusercontent.com/openshift/openshift-ansible/
 TEMPLATE_BRMS_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.7/xpaas-templates/decisionserver64-basic-s2i.json"
 
 # uncomment amount memory needed, sets RAM usage limit for OCP, default 6 GB.
-#VM_MEMORY=10240    # 10GB
-VM_MEMORY=8192    # 8GB
+VM_MEMORY=10240    # 10GB
+#VM_MEMORY=8192    # 8GB
 #VM_MEMORY=6144     # 6GB
 #VM_MEMORY=3072     # 3GB
 
@@ -58,22 +57,15 @@ echo
 # Ensure VirtualBox available.
 #
 if [ `uname` == 'Darwin' ]; then
-		command -v xhyve -v >/dev/null 2>&1 || { echo >&2 "OSX driver xhyve is required but not installed yet... use 'brew install xhyve' to install"; exit 1; }
-		echo "Xhyve is installed..."
+		command -v VirtualBox -h >/dev/null 2>&1 || { echo >&2 "VirtualBox is required but not installed yet... download here: https://www.virtualbox.org/wiki/Downloads"; exit 1; }
+		echo "VirtualBox is installed..."
 		echo
 elif [ `uname` == 'Linux' ]; then
 		VIRT_DRIVER='kvm'
-		VIRT_MEM='memory'
     echo "You are running on Linux."
     echo "This script assumes you are going to use KVM on Linux."
     echo "You'll need to install docker-machine and docker-machine-driver-kvm in your \$PATH manually."
     echo "Download them from https://github.com/docker/machine/releases and https://github.com/dhiltgen/docker-machine-kvm/releases, respectively."
-elif [ `uname` == 'Darwin' ]; then
-	  VIRT_DRIVER='virtualbox'
-		VIRT_MEM='memory'
-		command -v VirtualBox -h >/dev/null 2>&1 || { echo >&2 "VirtualBox is required but not installed yet... download here: https://www.virtualbox.org/wiki/Downloads"; exit 1; }
-		echo "VirtualBox is installed..."
-		echo
 fi
 
 # Ensure OpenShift command line tools available.
@@ -106,7 +98,7 @@ fi
 
 echo "Setting up OpenShift docker machine using $VIRT_DRIVER..."
 echo
-docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-${VIRT_MEM} "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_CACHE openshift 
+docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_CACHE openshift 
 
 if [ $? -ne 0 ]; then
 		echo
@@ -118,7 +110,7 @@ if [ $? -ne 0 ]; then
 
     echo "Setting up OpenShift docker machine using $VIRT_DRIVER..."
     echo
-		docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-${VIRT_MEM} "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_URL openshift 
+		docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_URL openshift 
 
 		if [ $? -ne 0 ]; then
 				echo
@@ -145,7 +137,7 @@ if [ $? -ne 0 ]; then
 
     echo "Setting up OpenShift docker machine using $VIRT_DRIVER..."
     echo
-		docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-${VIRT_MEM} "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_CACHE openshift 
+		docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_CACHE openshift 
 
 		echo
 		echo "Trying again to install OCP with cluster up..."

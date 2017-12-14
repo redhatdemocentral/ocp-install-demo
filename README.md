@@ -11,13 +11,12 @@ Pro Tip: Pay close attention to console output, will guide you to dependencies y
 listed here and the install provides pointers to downloads if missing:
 
    ```
-   1. VirtualBox for Windows
+   1. VirtualBox for Windows and OSX
    2. Hyper-V for Windows 10 (Windows Feature Install)
       a. Important - Use Hyper-V Manager to create "ocpNET" Virtual Switch. (name is used in script)
       b. Important - Set "ocpNET" to External Network physical/wireless interface (with DHCP) - Must have Internet.
-   3. Xhyve for OSX from 'brew install xhyve' 
-   4. KVM for Linux
-   5. OpenShift Client (oc) v3.7.9
+   3. KVM for Linux
+   4. OpenShift Client (oc) v3.7.9
    ```
 
 
@@ -142,7 +141,7 @@ Released versions
 -----------------
 See the tagged releases for the following versions of the product:
 
-- v2.2 - OpenShift Container Platform v3.7 based on OpenShift command line tools v3.7.9 with Xhyve osX installation.
+- v2.2 - OpenShift Container Platform v3.7 based on OpenShift command line tools v3.7.9 with Docker dependency removed.
 
 - v2.1 - OpenShift Container Platform v3.7 based on OpenShift command line tools v3.7.9.
 
