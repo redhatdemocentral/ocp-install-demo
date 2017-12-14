@@ -68,6 +68,12 @@ elif [ `uname` == 'Linux' ]; then
     echo "Download them from https://github.com/docker/machine/releases and https://github.com/dhiltgen/docker-machine-kvm/releases, respectively."
 fi
 
+# Ensure docker-machine tool available.
+#
+command -v docker-machine -v >/dev/null 2>&1 || { echo >&2 "Docker-machine is required but not installed yet... instructions here: https://docs.docker.com/machine/install-machine/#install-machine-directly"; exit 1; }
+echo "Docker-machine tooling installed..."
+echo
+
 # Ensure OpenShift command line tools available.
 #
 command -v oc help >/dev/null 2>&1 || { echo >&2 "OpenShift CLI tooling is required but not installed yet... download $OCP_VERSION here: https://access.redhat.com/downloads/content/290"; exit 1; }
@@ -350,7 +356,7 @@ echo "= Look for information at end of OCP install.      ="
 echo "=                                                  ="
 echo "=  The server is accessible via web console at:    ="
 echo "=                                                  ="
-echo "=	  $OCP_IP                ="
+echo "=	  $OCP_IP              ="
 echo "=                                                  ="
 echo "=  Log in as user: openshift-dev                   ="
 echo "=        password: devel                           ="

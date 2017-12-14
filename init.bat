@@ -63,6 +63,17 @@ if %ERRORLEVEL% NEQ 0 (
   echo.
 )
 
+REM Ensure docker-machine tool available.
+call docker-machine -v >nul 2>&1
+
+if %ERRORLEVEL% NEQ 0 (
+  echo Docker-machine tooling is required but not installed yet... instructions here: https://docs.docker.com/machine/install-machine/#install-machine-directly
+  GOTO :EOF
+) else (
+  echo Docker-machine command line tools installed...
+  echo.
+)
+
 for /f "delims=*" %%i in ('oc version ^| findstr -i oc') do (
   for /F "tokens=2 delims= " %%A in ('echo %%i') do ( 
 	set verFull=%%A	

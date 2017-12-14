@@ -16,7 +16,8 @@ listed here and the install provides pointers to downloads if missing:
       a. Important - Use Hyper-V Manager to create "ocpNET" Virtual Switch. (name is used in script)
       b. Important - Set "ocpNET" to External Network physical/wireless interface (with DHCP) - Must have Internet.
    3. KVM for Linux
-   4. OpenShift Client (oc) v3.7.9
+   4. Docker-machine tooling
+   5. OpenShift Client (oc) v3.7.9
    ```
 
 
