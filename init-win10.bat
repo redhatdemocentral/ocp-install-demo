@@ -15,6 +15,8 @@ set STREAM_DOTNET="https://raw.githubusercontent.com/openshift/openshift-ansible
 set TEMPLATE_EAP="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.7/xpaas-templates/eap70-basic-s2i.json"
 set TEMPLATE_BRMS_63="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/decisionserver63-basic-s2i.json"
 set TEMPLATE_BRMS_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.7/xpaas-templates/decisionserver64-basic-s2i.json"
+set TEMPLATE_BPM_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.7/xpaas-templates/processserver64-postgresql-s2i.json"
+set TEMPLATE_BPM_DB_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.7/xpaas-templates/processserver64-postgresql-persistent-s2i.json"
 
 REM uncomment amount memory needed, sets RAM usage limit for OCP, default 6 GB.
 REM set VM_MEMORY=10240
@@ -283,6 +285,33 @@ if %ERRORLEVEL% NEQ 0 (
   call oc create -n openshift -f %TEMPLATE_BRMS_64%
 	
 	if %ERRORLEVEL% NEQ 0 (
+		echo Failed again, exiting, check output messages and network connectivity before running install again.
+		echo.
+    call docker-machine rm -f openshift
+		GOTO :EOF
+  )
+)
+
+echo. 
+echo Updating Process Server templates...
+echo.
+call oc delete -n openshift -f %TEMPLATE_BPM_64%
+call oc delete -n openshift -f %TEMPLATE_BPM_DB_64%
+call oc create -n openshift -f %TEMPLATE_BPM_64%
+call oc create -n openshift -f %TEMPLATE_BPM_DB_64%
+
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem with accessing JBoss BPM Suite product template for OCP.
+	echo.
+  echo Trying again.
+	echo.
+  call oc delete -n openshift -f %TEMPLATE_BPM_64%
+  call oc delete -n openshift -f %TEMPLATE_BPM_DB_64%
+  call oc create -n openshift -f %TEMPLATE_BPM_64%
+  call oc create -n openshift -f %TEMPLATE_BPM_DB_64%
+	
+	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
 		echo.
     call docker-machine rm -f openshift

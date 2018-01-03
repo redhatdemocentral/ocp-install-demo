@@ -16,6 +16,8 @@ STREAM_DOTNET="https://raw.githubusercontent.com/openshift/openshift-ansible/mas
 TEMPLATE_EAP="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.7/xpaas-templates/eap70-basic-s2i.json"
 TEMPLATE_BRMS_63="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/decisionserver63-basic-s2i.json"
 TEMPLATE_BRMS_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.7/xpaas-templates/decisionserver64-basic-s2i.json"
+TEMPLATE_BPM_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.7/xpaas-templates/processserver64-postgresql-s2i.json"
+TEMPLATE_BPM_DB_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.7/xpaas-templates/processserver64-postgresql-persistent-s2i.json"
 
 # uncomment amount memory needed, sets RAM usage limit for OCP, default 6 GB.
 #VM_MEMORY=10240    # 10GB
@@ -282,7 +284,7 @@ oc create -n openshift -f $TEMPLATE_BRMS_64
 
 if [ $? -ne 0 ]; then
 	echo
-	echo "Problem with accessing JBoss BRMS product streams for OCP..."
+	echo "Problem with accessing JBoss BRMS product templates for OCP..."
 	echo
   echo "Trying again..."
 	echo
@@ -291,6 +293,34 @@ if [ $? -ne 0 ]; then
   oc delete -n openshift -f $TEMPLATE_BRMS_64 >/dev/null 2>&1
   oc create -n openshift -f $TEMPLATE_BRMS_63
   oc create -n openshift -f $TEMPLATE_BRMS_64
+	
+	if [ $? -ne 0 ]; then
+		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
+		echo
+		docker-machine rm -f openshift
+		exit
+	fi
+fi
+
+echo
+echo "Updating Process Server templates..."
+echo
+oc delete -n openshift -f $TEMPLATE_BPM_64 >/dev/null 2>&1
+oc delete -n openshift -f $TEMPLATE_BPM_DB_64 >/dev/null 2>&1
+oc create -n openshift -f $TEMPLATE_BPM_64
+oc create -n openshift -f $TEMPLATE_BPM_DB_64
+
+if [ $? -ne 0 ]; then
+	echo
+	echo "Problem with accessing JBoss BPM Suite product templates for OCP..."
+	echo
+  echo "Trying again..."
+	echo
+	sleep 10
+  oc delete -n openshift -f $TEMPLATE_BPM_64 >/dev/null 2>&1
+  oc delete -n openshift -f $TEMPLATE_BPM_DB_64 >/dev/null 2>&1
+  oc create -n openshift -f $TEMPLATE_BPM_64
+  oc create -n openshift -f $TEMPLATE_BPM_DB_64
 	
 	if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
