@@ -20,6 +20,7 @@ listed here and the install provides pointers to downloads if missing:
    5. Ansible-playbook tooling
    5. OpenShift Client (oc) v3.7.9
    ```
+Need more help? Follow a lab workshop on [how to install OpenShift Container Platform step-by-step](https://appdevcloudworkshop.github.io/lab01.html).
 
 
 Install on your machine
