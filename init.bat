@@ -20,8 +20,8 @@ set TEMPLATE_BPM_DB_64="https://raw.githubusercontent.com/openshift/openshift-an
 
 REM uncomment amount memory needed, sets RAM usage limit for OCP, default 6 GB.
 REM set VM_MEMORY=10240
+REM set VM_MEMORY=8192  
 set VM_MEMORY=6144 
-REM set VM_MEMORY=3072   
 
 REM wipe screen.
 cls

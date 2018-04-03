@@ -23,7 +23,6 @@ TEMPLATE_BPM_DB_64="https://raw.githubusercontent.com/openshift/openshift-ansibl
 #VM_MEMORY=10240    # 10GB
 #VM_MEMORY=8192    # 8GB
 VM_MEMORY=6144     # 6GB
-#VM_MEMORY=3072     # 3GB
 
 # wipe screen.
 clear 
