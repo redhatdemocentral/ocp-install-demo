@@ -18,7 +18,7 @@ listed here and the install provides pointers to downloads if missing:
    3. KVM for Linux
    4. Docker-machine tooling
    5. Ansible-playbook tooling
-   5. OpenShift Client (oc) v3.7.9
+   5. OpenShift Client (oc) v3.9.14
    ```
 Need more help? Follow a lab workshop on [how to install OpenShift Container Platform step-by-step](https://appdevcloudworkshop.github.io/lab01.html).
 
@@ -37,7 +37,7 @@ instructions (part of an online workshop)</a> that explain the installation in d
 
 Notes
 -----
-Installation reserves default of 8GB memory on your machine for OCP, see comments at top of init scripts to adjust variable 
+Installation reserves default of 6GB memory on your machine for OCP, see comments at top of init scripts to adjust variable 
 used to limit memory usage based on your needs.
 
 -----

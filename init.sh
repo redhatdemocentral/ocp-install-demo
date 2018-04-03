@@ -22,8 +22,8 @@ TEMPLATE_BPM_DB_64="https://raw.githubusercontent.com/openshift/openshift-ansibl
 # uncomment amount memory needed, sets RAM usage limit for OCP, default 6 GB.
 #VM_MEMORY=10240    # 10GB
 #VM_MEMORY=8192    # 8GB
-#VM_MEMORY=6144     # 6GB
-VM_MEMORY=4098     # 4GB
+VM_MEMORY=6144     # 6GB
+#VM_MEMORY=4098     # 4GB
 
 # wipe screen.
 clear 
