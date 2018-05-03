@@ -148,6 +148,8 @@ Released versions
 -----------------
 See the tagged releases for the following versions of the product:
 
+- v2.5 - OpenShift Container Platform v3.9 based on OpenShift command line tools v3.9.14, updated image streams and templates to v3.10 feeds.
+
 - v2.4 - OpenShift Container Platform v3.9 based on OpenShift command line tools v3.9.14.
 
 - v2.3 - OpenShift Container Platform v3.7 based on OpenShift command line tools v3.7.9 and added process server templates.

@@ -8,15 +8,22 @@ set OC_MAJOR_VER=v3
 set OC_MINOR_VER=9
 set OC_MINI_VER=14
 set OCP_VERSION=%OC_MAJOR_VER%.%OC_MINOR_VER%
-set STREAM_JBOSS="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.9/xpaas-streams/jboss-image-streams.json"
-set STREAM_FUSE="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.9/xpaas-streams/fis-image-streams.json"
-set STREAM_RHEL="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.9/image-streams/image-streams-rhel7.json"
-set STREAM_DOTNET="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.9/image-streams/dotnet_imagestreams.json"
-set TEMPLATE_EAP="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.9/xpaas-templates/eap70-basic-s2i.json"
-set TEMPLATE_BRMS_63="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/decisionserver63-basic-s2i.json"
-set TEMPLATE_BRMS_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.9/xpaas-templates/decisionserver64-basic-s2i.json"
-set TEMPLATE_BPM_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.9/xpaas-templates/processserver64-postgresql-s2i.json"
-set TEMPLATE_BPM_DB_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.9/xpaas-templates/processserver64-postgresql-persistent-s2i.json"
+set STREAM_BRMS_63="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/decisionserver63-image-stream.json"
+set STREAM_BRMS_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/decisionserver64-image-stream.json"
+set STREAM_EAP_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/eap64-image-stream.json"
+set STREAM_EAP_70="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/eap70-image-stream.json"
+set STREAM_EAP_71="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/eap71-image-stream.json"
+set STREAM_FUSE="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/fis-image-streams.json"
+set STREAM_OPENJDK18="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/openjdk18-image-stream.json"
+set STREAM_BPMS_63="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/processserver63-image-stream.json"
+set STREAM_BPMS_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/processserver64-image-stream.json"
+set STREAM_DOTNET="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/image-streams/dotnet_imagestreams.json"
+set STREAM_RHEL="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/image-streams/image-streams-rhel7.json"
+set TEMPLATE_EAP70="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-templates/eap70-basic-s2i.json"
+set TEMPLATE_EAP71="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-templates/eap71-basic-s2i.json"
+set TEMPLATE_BRMS_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-templates/decisionserver64-basic-s2i.json"
+set TEMPLATE_BPM_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-templates/processserver64-postgresql-s2i.json"
+set TEMPLATE_BPM_DB_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-templates/processserver64-postgresql-persistent-s2i.json"
 
 REM uncomment amount memory needed, sets RAM usage limit for OCP, default 6 GB.
 REM set VM_MEMORY=10240
@@ -197,21 +204,136 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 echo.
-echo Updating JBoss image streams...
+echo Updating JBoss BRMS 63 image stream...
 echo.
-call oc delete -n openshift -f %STREAM_JBOSS%
-call oc create -n openshift -f %STREAM_JBOSS%
+call oc delete -n openshift -f %STREAM_BRMS_63%
+call oc create -n openshift -f %STREAM_BRMS_63%
 
 if %ERRORLEVEL% NEQ 0 (
 	echo.
-	echo Problem with accessing JBoss EAP product streams for OCP.
+	echo Problem with accessing JBoss BRMS 63 stream for OCP.
 	echo.
   echo Trying again.
 	echo.
-  call oc delete -n openshift -f %STREAM_JBOSS%
-  call oc create -n openshift -f %STREAM_JBOSS%
+  call oc delete -n openshift -f %STREAM_BRMS_63%
+  call oc create -n openshift -f %STREAM_BRMS_63%
 	
-	if %ERRORLEVEL% NEQ 0 (
+	if %ERRORLEVELS% NEQ 0 (
+		echo Failed again, exiting, check output messages and network connectivity before running install again.
+		echo.
+    call docker-machine rm -f openshift
+		GOTO :EOF
+  )
+)
+
+echo.
+echo Updating JBoss BPMS 63 image stream...
+echo.
+call oc delete -n openshift -f %STREAM_BPMS_63%
+call oc create -n openshift -f %STREAM_BPMS_63%
+
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem with accessing JBoss BPMS 63 stream for OCP.
+	echo.
+  echo Trying again.
+	echo.
+  call oc delete -n openshift -f %STREAM_BPMS_63%
+  call oc create -n openshift -f %STREAM_BPMS_63%
+	
+	if %ERRORLEVELS% NEQ 0 (
+		echo Failed again, exiting, check output messages and network connectivity before running install again.
+		echo.
+    call docker-machine rm -f openshift
+		GOTO :EOF
+  )
+)
+
+echo.
+echo Updating JBoss BRMS 64 image stream...
+echo.
+call oc delete -n openshift -f %STREAM_BRMS_64%
+call oc create -n openshift -f %STREAM_BRMS_64%
+
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem with accessing JBoss BRMS 64 stream for OCP.
+	echo.
+  echo Trying again.
+	echo.
+  call oc delete -n openshift -f %STREAM_BRMS_64%
+  call oc create -n openshift -f %STREAM_BRMS_64%
+	
+	if %ERRORLEVELS% NEQ 0 (
+		echo Failed again, exiting, check output messages and network connectivity before running install again.
+		echo.
+    call docker-machine rm -f openshift
+		GOTO :EOF
+  )
+)
+
+echo.
+echo Updating JBoss BPMS 64 image stream...
+echo.
+call oc delete -n openshift -f %STREAM_BPMS_64%
+call oc create -n openshift -f %STREAM_BPMS_64%
+
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem with accessing JBoss BPMS 64 stream for OCP.
+	echo.
+  echo Trying again.
+	echo.
+  call oc delete -n openshift -f %STREAM_BPMS_64%
+  call oc create -n openshift -f %STREAM_BPMS_64%
+	
+	if %ERRORLEVELS% NEQ 0 (
+		echo Failed again, exiting, check output messages and network connectivity before running install again.
+		echo.
+    call docker-machine rm -f openshift
+		GOTO :EOF
+  )
+)
+
+echo.
+echo Updating JBoss EAP 70 image stream...
+echo.
+call oc delete -n openshift -f %STREAM_EAP_70%
+call oc create -n openshift -f %STREAM_EAP_70%
+
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem with accessing JBoss EAP 70 stream for OCP.
+	echo.
+  echo Trying again.
+	echo.
+  call oc delete -n openshift -f %STREAM_EAP_70%
+  call oc create -n openshift -f %STREAM_EAP_70%
+	
+	if %ERRORLEVELS% NEQ 0 (
+		echo Failed again, exiting, check output messages and network connectivity before running install again.
+		echo.
+    call docker-machine rm -f openshift
+		GOTO :EOF
+  )
+)
+
+echo.
+echo Updating JBoss EAP 71 image stream...
+echo.
+call oc delete -n openshift -f %STREAM_EAP_71%
+call oc create -n openshift -f %STREAM_EAP_71%
+
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem with accessing JBoss EAP 71 stream for OCP.
+	echo.
+  echo Trying again.
+	echo.
+  call oc delete -n openshift -f %STREAM_EAP_71%
+  call oc create -n openshift -f %STREAM_EAP_71%
+	
+	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
 		echo.
     call docker-machine rm -f openshift
@@ -234,7 +356,7 @@ if %ERRORLEVEL% NEQ 0 (
   call oc delete -n openshift -f %STREAM_FUSE%
   call oc create -n openshift -f %STREAM_FUSE%
 	
-	if %ERRORLEVEL% NEQ 0 (
+	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
 		echo.
     call docker-machine rm -f openshift
@@ -243,21 +365,67 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 echo.
-echo Updating EAP templates...
+echo Updating OPENJDK18 image stream...
 echo.
-call oc delete -n openshift -f %TEMPLATE_EAP%
-call oc create -n openshift -f %TEMPLATE_EAP%
+call oc delete -n openshift -f %STREAM_OPENJDK18%
+call oc create -n openshift -f %STREAM_OPENJDK18%
 
 if %ERRORLEVEL% NEQ 0 (
 	echo.
-	echo Problem with accessing JBoss EAP product streams for OCP.
+	echo Problem with accessing OPENJDK18 stream for OCP.
 	echo.
   echo Trying again.
 	echo.
-  call oc delete -n openshift -f %TEMPLATE_EAP%
-  call oc create -n openshift -f %TEMPLATE_EAP%
+  call oc delete -n openshift -f %STREAM_OPENJDK18%
+  call oc create -n openshift -f %STREAM_OPENJDK18%
 	
-	if %ERRORLEVEL% NEQ 0 (
+	if %ERRORLEVELS% NEQ 0 (
+		echo Failed again, exiting, check output messages and network connectivity before running install again.
+		echo.
+    call docker-machine rm -f openshift
+		GOTO :EOF
+  )
+)
+
+echo.
+echo Updating EAP 70 template...
+echo.
+call oc delete -n openshift -f %TEMPLATE_EAP70%
+call oc create -n openshift -f %TEMPLATE_EAP70%
+
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem with accessing JBoss EAP 70 stream for OCP.
+	echo.
+  echo Trying again.
+	echo.
+  call oc delete -n openshift -f %TEMPLATE_EAP70%
+  call oc create -n openshift -f %TEMPLATE_EAP70%
+	
+	if %ERRORLEVELS% NEQ 0 (
+		echo Failed again, exiting, check output messages and network connectivity before running install again.
+		echo.
+    call docker-machine rm -f openshift
+		GOTO :EOF
+  )
+)
+
+echo.
+echo Updating EAP 71 template...
+echo.
+call oc delete -n openshift -f %TEMPLATE_EAP71%
+call oc create -n openshift -f %TEMPLATE_EAP71%
+
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem with accessing JBoss EAP 71 stream for OCP.
+	echo.
+  echo Trying again.
+	echo.
+  call oc delete -n openshift -f %TEMPLATE_EAP71%
+  call oc create -n openshift -f %TEMPLATE_EAP71%
+	
+	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
 		echo.
     call docker-machine rm -f openshift
@@ -266,25 +434,21 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 echo. 
-echo Updating Decision Server templates...
+echo Updating Decision Server 64 template...
 echo.
-call oc delete -n openshift -f %TEMPLATE_BRMS_63%
 call oc delete -n openshift -f %TEMPLATE_BRMS_64%
-call oc create -n openshift -f %TEMPLATE_BRMS_63%
 call oc create -n openshift -f %TEMPLATE_BRMS_64%
 
 if %ERRORLEVEL% NEQ 0 (
 	echo.
-	echo Problem with accessing JBoss BRMS product streams for OCP.
+	echo Problem with accessing JBoss BRMS 64 stream for OCP.
 	echo.
   echo Trying again.
 	echo.
-  call oc delete -n openshift -f %TEMPLATE_BRMS_63%
   call oc delete -n openshift -f %TEMPLATE_BRMS_64%
-  call oc create -n openshift -f %TEMPLATE_BRMS_63%
   call oc create -n openshift -f %TEMPLATE_BRMS_64%
 	
-	if %ERRORLEVEL% NEQ 0 (
+	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
 		echo.
     call docker-machine rm -f openshift
@@ -293,22 +457,41 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 echo. 
-echo Updating Process Server templates...
+echo Updating Process Server 64 template...
 echo.
 call oc delete -n openshift -f %TEMPLATE_BPM_64%
-call oc delete -n openshift -f %TEMPLATE_BPM_DB_64%
 call oc create -n openshift -f %TEMPLATE_BPM_64%
-call oc create -n openshift -f %TEMPLATE_BPM_DB_64%
 
 if %ERRORLEVEL% NEQ 0 (
 	echo.
-	echo Problem with accessing JBoss BPM Suite product template for OCP.
+	echo Problem with accessing JBoss BPM Suite 64 template for OCP.
 	echo.
   echo Trying again.
 	echo.
   call oc delete -n openshift -f %TEMPLATE_BPM_64%
-  call oc delete -n openshift -f %TEMPLATE_BPM_DB_64%
   call oc create -n openshift -f %TEMPLATE_BPM_64%
+	
+	if %ERRORLEVELS% NEQ 0 (
+		echo Failed again, exiting, check output messages and network connectivity before running install again.
+		echo.
+    call docker-machine rm -f openshift
+		GOTO :EOF
+  )
+)
+
+echo. 
+echo Updating Process Server DB 64 template...
+echo.
+call oc delete -n openshift -f %TEMPLATE_BPM_DB_64%
+call oc create -n openshift -f %TEMPLATE_BPM_DB_64%
+
+if %ERRORLEVEL% NEQ 0 (
+	echo.
+	echo Problem with accessing JBoss BPM Suite DB 64 template for OCP.
+	echo.
+  echo Trying again.
+	echo.
+  call oc delete -n openshift -f %TEMPLATE_BPM_DB_64%
   call oc create -n openshift -f %TEMPLATE_BPM_DB_64%
 	
 	if %ERRORLEVELS% NEQ 0 (
@@ -334,7 +517,7 @@ if %ERRORLEVEL% NEQ 0 (
   call oc delete -n openshift -f %STREAM_RHEL%
   call oc create -n openshift -f %STREAM_RHEL%
 	
-	if %ERRORLEVEL% NEQ 0 (
+	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
 		echo.
     call docker-machine rm -f openshift
@@ -357,7 +540,7 @@ if %ERRORLEVEL% NEQ 0 (
   call oc delete -n openshift -f %STREAM_DOTNET%
   call oc create -n openshift -f %STREAM_DOTNET%
 	
-	if %ERRORLEVEL% NEQ 0 (
+	if %ERRORLEVELS% NEQ 0 (
 		echo Failed again, exiting, check output messages and network connectivity before running install again.
 		echo.
     call docker-machine rm -f openshift

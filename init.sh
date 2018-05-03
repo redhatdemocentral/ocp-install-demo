@@ -9,21 +9,29 @@ OCP_VERSION="$OC_MAJOR_VER.$OC_MINOR_VER"
 ISO_URL="https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso"
 ISO_CACHE="file://$HOME/.docker/machine/cache/boot2docker.iso"
 VIRT_DRIVER="virtualbox"
-STREAM_JBOSS="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.9/xpaas-streams/jboss-image-streams.json"
-STREAM_FUSE="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.9/xpaas-streams/fis-image-streams.json"
-STREAM_RHEL="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.9/image-streams/image-streams-rhel7.json"
-STREAM_DOTNET="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.9/image-streams/dotnet_imagestreams.json"
-TEMPLATE_EAP="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.9/xpaas-templates/eap70-basic-s2i.json"
-TEMPLATE_BRMS_63="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.6/xpaas-templates/decisionserver63-basic-s2i.json"
-TEMPLATE_BRMS_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.9/xpaas-templates/decisionserver64-basic-s2i.json"
-TEMPLATE_BPM_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.9/xpaas-templates/processserver64-postgresql-s2i.json"
-TEMPLATE_BPM_DB_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.9/xpaas-templates/processserver64-postgresql-persistent-s2i.json"
+STREAM_BRMS_63="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/decisionserver63-image-stream.json"
+STREAM_BRMS_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/decisionserver64-image-stream.json"
+STREAM_EAP_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/eap64-image-stream.json"
+STREAM_EAP_70="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/eap70-image-stream.json"
+STREAM_EAP_71="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/eap71-image-stream.json"
+STREAM_FUSE="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/fis-image-streams.json"
+STREAM_OPENJDK18="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/openjdk18-image-stream.json"
+STREAM_BPMS_63="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/processserver63-image-stream.json"
+STREAM_BPMS_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-streams/processserver64-image-stream.json"
+STREAM_DOTNET="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/image-streams/dotnet_imagestreams.json"
+STREAM_RHEL="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/image-streams/image-streams-rhel7.json"
+TEMPLATE_EAP70="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-templates/eap70-basic-s2i.json"
+TEMPLATE_EAP71="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-templates/eap71-basic-s2i.json"
+TEMPLATE_BRMS_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-templates/decisionserver64-basic-s2i.json"
+TEMPLATE_BPM_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-templates/processserver64-postgresql-s2i.json"
+TEMPLATE_BPM_DB_64="https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_examples/files/examples/v3.10/xpaas-templates/processserver64-postgresql-persistent-s2i.json"
 
 # uncomment amount memory needed, sets RAM usage limit for OCP, default 6 GB.
 #VM_MEMORY=10240    # 10GB
 #VM_MEMORY=8192    # 8GB
-VM_MEMORY=6144     # 6GB
-#VM_MEMORY=4098     # 4GB
+#VM_MEMORY=6144     # 6GB
+VM_MEMORY=4098     # 4GB
+#VM_MEMORY=3072     # 3GB
 
 # wipe screen.
 clear 
@@ -104,7 +112,7 @@ else
 	fi
 fi
 
-echo "Setting up OpenShift docker machine using $VIRT_DRIVER..."
+echo "Setting up OpenShift docker machine using $VIRT_DRIVER from cache..."
 echo
 docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_CACHE openshift 
 
@@ -116,7 +124,7 @@ if [ $? -ne 0 ]; then
 		echo
 		docker-machine rm -f openshift
 
-    echo "Setting up OpenShift docker machine using $VIRT_DRIVER..."
+    echo "Setting up OpenShift docker machine using $VIRT_DRIVER from url..."
     echo
 		docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_URL openshift 
 
@@ -143,7 +151,7 @@ if [ $? -ne 0 ]; then
 		echo
 		docker-machine rm -f openshift
 
-    echo "Setting up OpenShift docker machine using $VIRT_DRIVER..."
+    echo "Setting up OpenShift docker machine using $VIRT_DRIVER from cache..."
     echo
 		docker-machine create --driver ${VIRT_DRIVER} --${VIRT_DRIVER}-cpu-count "2" --${VIRT_DRIVER}-memory "$VM_MEMORY" --engine-insecure-registry 172.30.0.0/16 --${VIRT_DRIVER}-boot2docker-url $ISO_CACHE openshift 
 
@@ -203,20 +211,140 @@ if [ $? -ne 0 ]; then
 fi
 
 echo
-echo "Updating JBoss image streams..."
+echo "Updating JBoss BRMS 63 image stream..."
 echo
-oc delete -n openshift -f $STREAM_JBOSS >/dev/null 2>&1
-oc create -n openshift -f $STREAM_JBOSS
+oc delete -n openshift -f $STREAM_BRMS_63 >/dev/null 2>&1
+oc create -n openshift -f $STREAM_BRMS_63
 
 if [ $? -ne 0 ]; then
 	echo
-	echo "Problem with accessing JBoss product streams for OCP..."
+	echo "Problem with accessing JBoss BRMS 63 stream for OCP..."
 	echo
   echo "Trying again..."
 	echo
 	sleep 10
-  oc delete -n openshift -f $STREAM_JBOSS >/dev/null 2>&1
-  oc create -n openshift -f $STREAM_JBOSS
+  oc delete -n openshift -f $STREAM_BRMS_63 >/dev/null 2>&1
+  oc create -n openshift -f $STREAM_BRMS_63
+	
+	if [ $? -ne 0 ]; then
+		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
+		echo
+		docker-machine rm -f openshift
+		exit
+	fi
+fi
+
+echo
+echo "Updating JBoss BPMS 63 image stream..."
+echo
+oc delete -n openshift -f $STREAM_BPMS_63 >/dev/null 2>&1
+oc create -n openshift -f $STREAM_BPMS_63
+
+if [ $? -ne 0 ]; then
+	echo
+	echo "Problem with accessing JBoss BPMS 63 stream for OCP..."
+	echo
+  echo "Trying again..."
+	echo
+	sleep 10
+  oc delete -n openshift -f $STREAM_BPMS_63 >/dev/null 2>&1
+  oc create -n openshift -f $STREAM_BPMS_63
+	
+	if [ $? -ne 0 ]; then
+		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
+		echo
+		docker-machine rm -f openshift
+		exit
+	fi
+fi
+
+echo
+echo "Updating JBoss BRMS 64 image stream..."
+echo
+oc delete -n openshift -f $STREAM_BRMS_64 >/dev/null 2>&1
+oc create -n openshift -f $STREAM_BRMS_64
+
+if [ $? -ne 0 ]; then
+	echo
+	echo "Problem with accessing JBoss BRMS 64 stream for OCP..."
+	echo
+  echo "Trying again..."
+	echo
+	sleep 10
+  oc delete -n openshift -f $STREAM_BRMS_64 >/dev/null 2>&1
+  oc create -n openshift -f $STREAM_BRMS_64
+	
+	if [ $? -ne 0 ]; then
+		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
+		echo
+		docker-machine rm -f openshift
+		exit
+	fi
+fi
+
+echo
+echo "Updating JBoss BPMS 64 image stream..."
+echo
+oc delete -n openshift -f $STREAM_BPMS_64 >/dev/null 2>&1
+oc create -n openshift -f $STREAM_BPMS_64
+
+if [ $? -ne 0 ]; then
+	echo
+	echo "Problem with accessing JBoss BPMS 64 stream for OCP..."
+	echo
+  echo "Trying again..."
+	echo
+	sleep 10
+  oc delete -n openshift -f $STREAM_BPMS_64 >/dev/null 2>&1
+  oc create -n openshift -f $STREAM_BPMS_64
+	
+	if [ $? -ne 0 ]; then
+		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
+		echo
+		docker-machine rm -f openshift
+		exit
+	fi
+fi
+
+echo
+echo "Updating JBoss EAP 70 image stream..."
+echo
+oc delete -n openshift -f $STREAM_EAP_70 >/dev/null 2>&1
+oc create -n openshift -f $STREAM_EAP_70
+
+if [ $? -ne 0 ]; then
+	echo
+	echo "Problem with accessing JBoss EAP 70 stream for OCP..."
+	echo
+  echo "Trying again..."
+	echo
+	sleep 10
+  oc delete -n openshift -f $STREAM_EAP_70 >/dev/null 2>&1
+  oc create -n openshift -f $STREAM_EAP_70
+	
+	if [ $? -ne 0 ]; then
+		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
+		echo
+		docker-machine rm -f openshift
+		exit
+	fi
+fi
+
+echo
+echo "Updating JBoss EAP 71 image stream..."
+echo
+oc delete -n openshift -f $STREAM_EAP_71 >/dev/null 2>&1
+oc create -n openshift -f $STREAM_EAP_71
+
+if [ $? -ne 0 ]; then
+	echo
+	echo "Problem with accessing JBoss EAP 71 stream for OCP..."
+	echo
+  echo "Trying again..."
+	echo
+	sleep 10
+  oc delete -n openshift -f $STREAM_EAP_71 >/dev/null 2>&1
+  oc create -n openshift -f $STREAM_EAP_71
 	
 	if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
@@ -251,20 +379,20 @@ if [ $? -ne 0 ]; then
 fi
 
 echo
-echo "Updating EAP templates..."
+echo "Updating OpenJDK18 image stream..."
 echo
-oc delete -n openshift -f $TEMPLATE_EAP >/dev/null 2>&1
-oc create -n openshift -f $TEMPLATE_EAP
+oc delete -n openshift -f $STREAM_OPENJDK18 >/dev/null 2>&1
+oc create -n openshift -f $STREAM_OPENJDK18
 
 if [ $? -ne 0 ]; then
 	echo
-	echo "Problem with accessing JBoss EAP product streams for OCP..."
+	echo "Problem with accessing OPENJDK18 stream for OCP..."
 	echo
   echo "Trying again..."
 	echo
 	sleep 10
-	oc delete -n openshift -f $TEMPLATE_EAP >/dev/null 2>&1
-  oc create -n openshift -f $TEMPLATE_EAP
+  oc delete -n openshift -f $STREAM_OPENJDK18 >/dev/null 2>&1
+  oc create -n openshift -f $STREAM_OPENJDK18
 	
 	if [ $? -ne 0 ]; then
 		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
@@ -275,23 +403,67 @@ if [ $? -ne 0 ]; then
 fi
 
 echo
-echo "Updating Decision Server templates..."
+echo "Updating EAP 70 template..."
 echo
-oc delete -n openshift -f $TEMPLATE_BRMS_63 >/dev/null 2>&1
-oc delete -n openshift -f $TEMPLATE_BRMS_64 >/dev/null 2>&1
-oc create -n openshift -f $TEMPLATE_BRMS_63
-oc create -n openshift -f $TEMPLATE_BRMS_64
+oc delete -n openshift -f $TEMPLATE_EAP70 >/dev/null 2>&1
+oc create -n openshift -f $TEMPLATE_EAP70
 
 if [ $? -ne 0 ]; then
 	echo
-	echo "Problem with accessing JBoss BRMS product templates for OCP..."
+	echo "Problem with accessing JBoss EAP 70 template for OCP..."
 	echo
   echo "Trying again..."
 	echo
 	sleep 10
-  oc delete -n openshift -f $TEMPLATE_BRMS_63 >/dev/null 2>&1
+	oc delete -n openshift -f $TEMPLATE_EAP70 >/dev/null 2>&1
+  oc create -n openshift -f $TEMPLATE_EAP70
+	
+	if [ $? -ne 0 ]; then
+		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
+		echo
+		docker-machine rm -f openshift
+		exit
+	fi
+fi
+
+echo
+echo "Updating EAP 71 template..."
+echo
+oc delete -n openshift -f $TEMPLATE_EAP71 >/dev/null 2>&1
+oc create -n openshift -f $TEMPLATE_EAP71
+
+if [ $? -ne 0 ]; then
+	echo
+	echo "Problem with accessing JBoss EAP 71 template for OCP..."
+	echo
+  echo "Trying again..."
+	echo
+	sleep 10
+	oc delete -n openshift -f $TEMPLATE_EAP71 >/dev/null 2>&1
+  oc create -n openshift -f $TEMPLATE_EAP71
+	
+	if [ $? -ne 0 ]; then
+		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
+		echo
+		docker-machine rm -f openshift
+		exit
+	fi
+fi
+
+echo
+echo "Updating Decision Server 64 template..."
+echo
+oc delete -n openshift -f $TEMPLATE_BRMS_64 >/dev/null 2>&1
+oc create -n openshift -f $TEMPLATE_BRMS_64
+
+if [ $? -ne 0 ]; then
+	echo
+	echo "Problem with accessing JBoss BRMS 64 template for OCP..."
+	echo
+  echo "Trying again..."
+	echo
+	sleep 10
   oc delete -n openshift -f $TEMPLATE_BRMS_64 >/dev/null 2>&1
-  oc create -n openshift -f $TEMPLATE_BRMS_63
   oc create -n openshift -f $TEMPLATE_BRMS_64
 	
 	if [ $? -ne 0 ]; then
@@ -303,23 +475,43 @@ if [ $? -ne 0 ]; then
 fi
 
 echo
-echo "Updating Process Server templates..."
+echo "Updating Process Server 64 template..."
 echo
 oc delete -n openshift -f $TEMPLATE_BPM_64 >/dev/null 2>&1
-oc delete -n openshift -f $TEMPLATE_BPM_DB_64 >/dev/null 2>&1
 oc create -n openshift -f $TEMPLATE_BPM_64
-oc create -n openshift -f $TEMPLATE_BPM_DB_64
 
 if [ $? -ne 0 ]; then
 	echo
-	echo "Problem with accessing JBoss BPM Suite product templates for OCP..."
+	echo "Problem with accessing JBoss BPM Suite 64 template for OCP..."
 	echo
   echo "Trying again..."
 	echo
 	sleep 10
   oc delete -n openshift -f $TEMPLATE_BPM_64 >/dev/null 2>&1
-  oc delete -n openshift -f $TEMPLATE_BPM_DB_64 >/dev/null 2>&1
   oc create -n openshift -f $TEMPLATE_BPM_64
+	
+	if [ $? -ne 0 ]; then
+		echo "Failed again, exiting, check output messages and network connectivity before running install again..."
+		echo
+		docker-machine rm -f openshift
+		exit
+	fi
+fi
+
+echo
+echo "Updating Process Server DB 64 template..."
+echo
+oc delete -n openshift -f $TEMPLATE_BPM_DB_64 >/dev/null 2>&1
+oc create -n openshift -f $TEMPLATE_BPM_DB_64
+
+if [ $? -ne 0 ]; then
+	echo
+	echo "Problem with accessing JBoss BPM Suite DB 64 template for OCP..."
+	echo
+  echo "Trying again..."
+	echo
+	sleep 10
+  oc delete -n openshift -f $TEMPLATE_BPM_DB_64 >/dev/null 2>&1
   oc create -n openshift -f $TEMPLATE_BPM_DB_64
 	
 	if [ $? -ne 0 ]; then
