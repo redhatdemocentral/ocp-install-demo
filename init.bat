@@ -184,8 +184,9 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 echo.
-echo Updating JBoss BRMS 63 image stream...
-echo.
+echo Updating JBoss image streams...
+
+REM Updating JBoss BRMS 6.3 image stream.
 call oc delete -n openshift -f %STREAM_BRMS_63%
 call oc create -n openshift -f %STREAM_BRMS_63%
 
@@ -206,9 +207,7 @@ if %ERRORLEVEL% NEQ 0 (
   )
 )
 
-echo.
-echo Updating JBoss BPMS 63 image stream...
-echo.
+REM Updating JBoss BPMS 6.3 image stream.
 call oc delete -n openshift -f %STREAM_BPMS_63%
 call oc create -n openshift -f %STREAM_BPMS_63%
 
@@ -229,9 +228,7 @@ if %ERRORLEVEL% NEQ 0 (
   )
 )
 
-echo.
-echo Updating JBoss BRMS 64 image stream...
-echo.
+REM Updating JBoss BRMS 6.4 image stream.
 call oc delete -n openshift -f %STREAM_BRMS_64%
 call oc create -n openshift -f %STREAM_BRMS_64%
 
@@ -252,9 +249,7 @@ if %ERRORLEVEL% NEQ 0 (
   )
 )
 
-echo.
-echo Updating JBoss BPMS 64 image stream...
-echo.
+REM Updating JBoss BPMS 6.4 image stream.
 call oc delete -n openshift -f %STREAM_BPMS_64%
 call oc create -n openshift -f %STREAM_BPMS_64%
 
@@ -275,9 +270,7 @@ if %ERRORLEVEL% NEQ 0 (
   )
 )
 
-echo.
-echo Updating JBoss EAP 70 image stream...
-echo.
+REM Updating JBoss EAP 7.0 image stream.
 call oc delete -n openshift -f %STREAM_EAP_70%
 call oc create -n openshift -f %STREAM_EAP_70%
 
@@ -298,9 +291,7 @@ if %ERRORLEVEL% NEQ 0 (
   )
 )
 
-echo.
-echo Updating JBoss EAP 71 image stream...
-echo.
+REM Updating JBoss EAP 7.1 image stream.
 call oc delete -n openshift -f %STREAM_EAP_71%
 call oc create -n openshift -f %STREAM_EAP_71%
 
@@ -321,9 +312,7 @@ if %ERRORLEVEL% NEQ 0 (
   )
 )
 
-echo.
-echo Updating Fuse image streams...
-echo.
+REM Updating Fuse image streams.
 call oc delete -n openshift -f %STREAM_FUSE%
 call oc create -n openshift -f %STREAM_FUSE%
 
@@ -344,9 +333,7 @@ if %ERRORLEVEL% NEQ 0 (
   )
 )
 
-echo.
-echo Updating OPENJDK18 image stream...
-echo.
+REM Updating OPENJDK18 image stream.
 call oc delete -n openshift -f %STREAM_OPENJDK18%
 call oc create -n openshift -f %STREAM_OPENJDK18%
 
@@ -367,9 +354,7 @@ if %ERRORLEVEL% NEQ 0 (
   )
 )
 
-echo.
-echo Updating EAP 70 template...
-echo.
+REM Updating EAP 7.0 template.
 call oc delete -n openshift -f %TEMPLATE_EAP70%
 call oc create -n openshift -f %TEMPLATE_EAP70%
 
@@ -390,9 +375,7 @@ if %ERRORLEVEL% NEQ 0 (
   )
 )
 
-echo.
-echo Updating EAP 71 template...
-echo.
+REM Updating EAP 7.1 template.
 call oc delete -n openshift -f %TEMPLATE_EAP71%
 call oc create -n openshift -f %TEMPLATE_EAP71%
 
@@ -413,9 +396,7 @@ if %ERRORLEVEL% NEQ 0 (
   )
 )
 
-echo. 
-echo Updating Decision Server 64 template...
-echo.
+REM Updating Decision Server 6.4 template.
 call oc delete -n openshift -f %TEMPLATE_BRMS_64%
 call oc create -n openshift -f %TEMPLATE_BRMS_64%
 
@@ -436,9 +417,7 @@ if %ERRORLEVEL% NEQ 0 (
   )
 )
 
-echo. 
-echo Updating Process Server 64 template...
-echo.
+REM Updating Process Server 6.4 template.
 call oc delete -n openshift -f %TEMPLATE_BPM_64%
 call oc create -n openshift -f %TEMPLATE_BPM_64%
 
@@ -459,9 +438,7 @@ if %ERRORLEVEL% NEQ 0 (
   )
 )
 
-echo. 
-echo Updating Process Server DB 64 template...
-echo.
+REM Updating Process Server DB 6.4 template.
 call oc delete -n openshift -f %TEMPLATE_BPM_DB_64%
 call oc create -n openshift -f %TEMPLATE_BPM_DB_64%
 
@@ -484,7 +461,6 @@ if %ERRORLEVEL% NEQ 0 (
 
 echo.
 echo Updating RHEL 7 image streams...
-echo.
 call oc delete -n openshift -f %STREAM_RHEL%
 call oc create -n openshift -f %STREAM_RHEL%
 
@@ -507,7 +483,6 @@ if %ERRORLEVEL% NEQ 0 (
 
 echo.
 echo Update .Net image streams...
-echo.
 call oc delete -n openshift -f %STREAM_DOTNET%
 call oc create -n openshift -f %STREAM_DOTNET%
 

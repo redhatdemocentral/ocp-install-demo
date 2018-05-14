@@ -211,8 +211,10 @@ if [ $? -ne 0 ]; then
 fi
 
 echo
-echo "Updating JBoss BRMS 63 image stream..."
-echo
+echo "Updating JBoss image streams..."
+
+# Updating JBoss BRMS 6.3 image stream.
+#
 oc delete -n openshift -f $STREAM_BRMS_63 >/dev/null 2>&1
 oc create -n openshift -f $STREAM_BRMS_63
 
@@ -234,9 +236,8 @@ if [ $? -ne 0 ]; then
 	fi
 fi
 
-echo
-echo "Updating JBoss BPMS 63 image stream..."
-echo
+# Updating JBoss BPMS 6.3 image stream.
+#
 oc delete -n openshift -f $STREAM_BPMS_63 >/dev/null 2>&1
 oc create -n openshift -f $STREAM_BPMS_63
 
@@ -258,9 +259,8 @@ if [ $? -ne 0 ]; then
 	fi
 fi
 
-echo
-echo "Updating JBoss BRMS 64 image stream..."
-echo
+# Updating JBoss BRMS 6.4 image stream.
+#
 oc delete -n openshift -f $STREAM_BRMS_64 >/dev/null 2>&1
 oc create -n openshift -f $STREAM_BRMS_64
 
@@ -282,9 +282,8 @@ if [ $? -ne 0 ]; then
 	fi
 fi
 
-echo
-echo "Updating JBoss BPMS 64 image stream..."
-echo
+# Updating JBoss BPMS 6.4 image stream.
+#
 oc delete -n openshift -f $STREAM_BPMS_64 >/dev/null 2>&1
 oc create -n openshift -f $STREAM_BPMS_64
 
@@ -306,9 +305,8 @@ if [ $? -ne 0 ]; then
 	fi
 fi
 
-echo
-echo "Updating JBoss EAP 70 image stream..."
-echo
+# Updating JBoss EAP 7.0 image stream.
+#
 oc delete -n openshift -f $STREAM_EAP_70 >/dev/null 2>&1
 oc create -n openshift -f $STREAM_EAP_70
 
@@ -330,9 +328,7 @@ if [ $? -ne 0 ]; then
 	fi
 fi
 
-echo
-echo "Updating JBoss EAP 71 image stream..."
-echo
+# Updating JBoss EAP 7.1 image stream.
 oc delete -n openshift -f $STREAM_EAP_71 >/dev/null 2>&1
 oc create -n openshift -f $STREAM_EAP_71
 
@@ -354,9 +350,7 @@ if [ $? -ne 0 ]; then
 	fi
 fi
 
-echo
-echo "Updating Fuse image streams..."
-echo
+# Updating Fuse image streams.
 oc delete -n openshift -f $STREAM_FUSE >/dev/null 2>&1
 oc create -n openshift -f $STREAM_FUSE
 
@@ -378,9 +372,8 @@ if [ $? -ne 0 ]; then
 	fi
 fi
 
-echo
-echo "Updating OpenJDK18 image stream..."
-echo
+# Updating OpenJDK18 image stream.
+#
 oc delete -n openshift -f $STREAM_OPENJDK18 >/dev/null 2>&1
 oc create -n openshift -f $STREAM_OPENJDK18
 
@@ -402,9 +395,8 @@ if [ $? -ne 0 ]; then
 	fi
 fi
 
-echo
-echo "Updating EAP 70 template..."
-echo
+# Updating EAP 7.0 template.
+#
 oc delete -n openshift -f $TEMPLATE_EAP70 >/dev/null 2>&1
 oc create -n openshift -f $TEMPLATE_EAP70
 
@@ -426,9 +418,8 @@ if [ $? -ne 0 ]; then
 	fi
 fi
 
-echo
-echo "Updating EAP 71 template..."
-echo
+# Updating EAP 7.1 template.
+#
 oc delete -n openshift -f $TEMPLATE_EAP71 >/dev/null 2>&1
 oc create -n openshift -f $TEMPLATE_EAP71
 
@@ -450,9 +441,8 @@ if [ $? -ne 0 ]; then
 	fi
 fi
 
-echo
-echo "Updating Decision Server 64 template..."
-echo
+# Updating Decision Server 6.4 template.
+#
 oc delete -n openshift -f $TEMPLATE_BRMS_64 >/dev/null 2>&1
 oc create -n openshift -f $TEMPLATE_BRMS_64
 
@@ -474,9 +464,8 @@ if [ $? -ne 0 ]; then
 	fi
 fi
 
-echo
-echo "Updating Process Server 64 template..."
-echo
+# Updating Process Server 6.4 template.
+#
 oc delete -n openshift -f $TEMPLATE_BPM_64 >/dev/null 2>&1
 oc create -n openshift -f $TEMPLATE_BPM_64
 
@@ -498,9 +487,8 @@ if [ $? -ne 0 ]; then
 	fi
 fi
 
-echo
-echo "Updating Process Server DB 64 template..."
-echo
+# Updating Process Server DB 6.4 template.
+#
 oc delete -n openshift -f $TEMPLATE_BPM_DB_64 >/dev/null 2>&1
 oc create -n openshift -f $TEMPLATE_BPM_DB_64
 
@@ -524,7 +512,6 @@ fi
 
 echo
 echo "Updating RHEL 7 image streams..."
-echo
 oc delete -n openshift -f $STREAM_RHEL >/dev/null 2>&1
 oc create -n openshift -f $STREAM_RHEL
 
@@ -548,7 +535,6 @@ fi
 
 echo
 echo "Update .Net image streams..."
-echo
 oc delete -n openshift -f $STREAM_DOTNET >/dev/null 2>&1
 oc create -n openshift -f $STREAM_DOTNET
 
