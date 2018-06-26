@@ -1,3 +1,6 @@
+Update: June 2018 moved to [Gitlab](https://gitlab.com/redhatdemocentral/ocp-install-demo).
+
+
 OpenShift Container Platform Install Demo
 =========================================
 If you are looking to develop containerized applications, the OpenShift Container Plaform (OCP) can help you by providing 
